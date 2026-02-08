@@ -465,6 +465,7 @@ hook.Add("PostEntityFireBullets","bulletsuppression",function(ent,bullet)
 	local tr = bullet.Trace
 	local dmg = bullet.Damage
 	if ent == Entity(0) then return end
+	if !IsValid(ent) then return end
 	for i,ply in player.Iterator() do--five pebbles
 		if (IsValid(ent:GetOwner()) and ply == ent:GetOwner()) or ent == ply then continue end
 		if !ply:Alive() then continue end
