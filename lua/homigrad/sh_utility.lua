@@ -879,11 +879,11 @@ local IsValid = IsValid
 --//
 --\\ DrawPlayerRagdoll
 	local hg_ragdollcombat = ConVarExists("hg_ragdollcombat") and GetConVar("hg_ragdollcombat") or CreateConVar("hg_ragdollcombat", 0, FCVAR_REPLICATED, "ragdoll combat", 0, 1)
-	
+
 	function hg.RagdollCombatInUse(ply)
 		return hg_ragdollcombat:GetBool() and IsValid(ply.FakeRagdoll)
 	end
-	
+
 	local hg_firstperson_ragdoll = ConVarExists("hg_firstperson_ragdoll") and GetConVar("hg_firstperson_ragdoll") or CreateConVar("hg_firstperson_ragdoll", 0, FCVAR_ARCHIVE, "first person ragdoll", 0, 1)
 	local hg_firstperson_death = ConVarExists("hg_firstperson_death") and GetConVar("hg_firstperson_death") or CreateClientConVar("hg_firstperson_death", "0", true, false, "first person death", 0, 1)
 	local hg_gopro = ConVarExists("hg_gopro") and GetConVar("hg_gopro") or CreateClientConVar("hg_gopro", "0", true, false, "gopro camera", 0, 1)
@@ -948,7 +948,7 @@ local IsValid = IsValid
 		--if !current:IsEqualTol(wawanted, 0.01) then
 			--ent:ManipulateBoneScale(lkp, wawanted)
 			local mat = ent:GetBoneMatrix(lkp)
-			
+
 			if (!hg_gopro:GetBool() and (ent == ply or (!hg_ragdollcombat:GetBool() or hg_firstperson_ragdoll:GetBool()))) or (hg_firstperson_death:GetBool() and follow == ent) then
 				mat:SetScale(wawanted)
 			end
@@ -1508,7 +1508,7 @@ local IsValid = IsValid
 		hg.approach_vector = approach_vector
 	--//
 
-
+	local hg_movement_stamina_debuff = CreateConVar("hg_movement_stamina_debuff","0.3",{FCVAR_REPLICATED,FCVAR_ARCHIVE,FCVAR_NOTIFY},"movement debuff when low stamina",0,1)
 	local vecZero = Vector()
 	local vomitVPAng = Angle(1,0,0)
 	hook.Add("SetupMove", "HG(StartCommand)", function(ply, mv, cmd)
@@ -1824,7 +1824,7 @@ local IsValid = IsValid
 		k = k * math.Clamp(consmul, 0.7, 1)
 		k = k * math.Clamp((org.temperature and (1 - (org.temperature - 38) * 0.25) or 1), 0.5, 1)
 		k = k * math.Clamp((org.temperature and ((org.temperature - 35) * 0.25 + 1) or 1), 0.5, 1)
-		k = k * math.Clamp((org.stamina and org.stamina[1] or 180) / 120, 0.3, 1)
+		k = k * math.Clamp((org.stamina and org.stamina[1] or 180) / 120, hg_movement_stamina_debuff:GetFloat(), 1)
 		k = k * math.Clamp(5 / ((org.immobilization or 0) + 1), 0.25, 1)
 		k = k * math.Clamp((org.blood or 0) / 5000, 0, 1)
 		k = k * math.Clamp(10 / ((org.shock or 0) + 1), 0.25, 1)
@@ -1990,10 +1990,6 @@ local IsValid = IsValid
 		end
 
 		hook_Run("HG_PlayerFootstep_Notify", ply, pos, foot, sound, volume, rf)	--; Do not return anything from this _Notify hook
-		
-		local Hook = hook_Run("HG_PlayerFootstep", ply, pos, foot, sound, volume, rf)
-
-		if Hook then return Hook end
 
 		if CLIENT and ply == lply and ply.move then
 			footcl = (footcl == nil and -1 or footcl) + 1
@@ -2019,6 +2015,9 @@ local IsValid = IsValid
 			if ply:GetNetVar("Armor", {})["torso"] then
 				EmitSound("arc9_eft_shared/weapon_generic_rifle_spin"..math.random(9)..".ogg", pos, ply:EntIndex(), CHAN_AUTO, changePitch(math.min(len / 100, 0.89)), 80)
 			end
+
+			local Hook = hook_Run("HG_PlayerFootstep", ply, pos, foot, sound, volume, rf)
+			if Hook then return Hook end
 
 			if !(ply:IsWalking() or ply:Crouching()) and ent == ply then
 				local snd
@@ -2336,7 +2335,7 @@ local IsValid = IsValid
 		["lunasflightschool_ah6"] = {multi = 20, AmmoType = "14.5x114mm BZTM"},
 		["npc_turret_floor"] = {multi = 1.25, AmmoType = "9x19 mm Parabellum"},
 		["npc_sniper"] = {multi = 3, AmmoType = "14.5x114mm BZTM", PenetrationMul = 4},
-		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает( потому что прожектайлами стреляет
+		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает(
 		["npc_turret_ceiling"] = {multi = 1.25, AmmoType = "9x19 mm QuakeMaker"},
 	}
 
@@ -2514,7 +2513,6 @@ duplicator.Allow( "homigrad_base" )
 			else
 				anim = ACT_HL2MP_RUN_FAST
 			end
-
 			return anim, -1
 		end
 	end)

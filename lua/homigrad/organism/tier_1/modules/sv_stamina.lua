@@ -1,5 +1,6 @@
 
 local min, max, Round = math.min, math.max, math.Round
+local hg_organism_stamina_sprint_mul = CreateConVar("hg_organism_stamina_sprint_mul","1",{FCVAR_ARCHIVE,FCVAR_NOTIFY,FCVAR_NEVER_AS_STRING},"change sprint drain when sprinting",0,10)
 --local Organism = hg.organism
 hg.organism.module.stamina = {}
 local module = hg.organism.module.stamina
@@ -49,7 +50,7 @@ module[2] = function(owner, org, timeValue)
 	if owner:IsPlayer() then
 		local wep = owner:GetActiveWeapon()
 		local walk = owner:KeyDown(IN_FORWARD) or owner:KeyDown(IN_BACK) or owner:KeyDown(IN_MOVELEFT) or owner:KeyDown(IN_MOVERIGHT)
-		velLen = max(min(owner:GetVelocity():Length(), org.moveMaxSpeed), 0) / (owner:GetRunSpeed() / 1.3)-- / ((IsValid(wep) and wep ~= NULL and wep:GetClass() == "weapon_hands_sh" and owner:KeyDown(IN_WALK)) and 1.3 or 0.58))
+		velLen = max(min(owner:GetVelocity():Length(), org.moveMaxSpeed), 0) / (owner:GetRunSpeed() / hg_organism_stamina_sprint_mul:GetFloat())-- / ((IsValid(wep) and wep ~= NULL and wep:GetClass() == "weapon_hands_sh" and owner:KeyDown(IN_WALK)) and 1.3 or 0.58))
 		--print(velLen)
 		if (owner:OnGround() or owner:WaterLevel() >= 2) and walk and not owner:InVehicle() and owner:IsSprinting() and org.stamina[1] > 20 then
 			stamina.sub = (owner:WaterLevel() >= 2 and 2 or 1) * (velLen ^ 0.5)
@@ -73,6 +74,7 @@ module[2] = function(owner, org, timeValue)
 	stamina.weight = owner:IsPlayer() and math.Clamp((1 / hg.CalculateWeight(owner,250)) - 1,0,1) or 0
 	local muffed = owner.armors and owner.armors["face"] == "mask2"
 	stamina.sub = stamina.sub + stamina.sub * stamina.weight * (muffed and 2 or 1)
+
 	org.hungry = org.hungry or 0
 	stamina.max = (org.superfighter and 2 or 1) * ((stamina.range * (1 - (org.pneumothorax) / 2) + org.adrenaline * 20 ) * math.max(1 - org.hemotransfusionshock,0.2)) * math.max(1 - (org.hungry/100),0.65)
 	stamina[1] = max(stamina[1] - stamina.sub * timeValue * 17, 0)

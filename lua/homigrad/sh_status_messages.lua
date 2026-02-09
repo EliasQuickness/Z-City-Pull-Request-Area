@@ -10,17 +10,17 @@ local allowedchars = {
 local audible_pain = {
 	"AAAAAGH..FUCK.. IT HURTS.",
 	"I CAN'T TAKE THIS ANYMORE!",
-    "Make it STOP make it STOP MAKE IT STOP",
-    "Why won't IT STOP",
-    "Make me unconscious. PLEASE",
-    "Why was I born to feel this why...",
-    "I'd do anything for it to stop... ANYTHING.",
-    "This isn't living this is being TORTURED",
-    "I don't care anymore just STOP the PAIN",
-    "Nothing matters EXCEPT MAKING IT STOP...",
-    "Every second is an eternity of FIRE.",
-    "DEATH WOULD BE MERCY NOW...",
-    "Just one moment without the pain..",
+  "Make it STOP make it STOP MAKE IT STOP",
+  "Why won't IT STOP",
+  "Make me unconscious. PLEASE",
+  "Why was I born to feel this why...",
+  "I'd do anything for it to stop... ANYTHING.",
+  "This isn't living this is being TORTURED",
+  "I don't care anymore just STOP the PAIN",
+  "Nothing matters EXCEPT MAKING IT STOP...",
+  "Every second is an eternity of FIRE.",
+  "DEATH WOULD BE MERCY NOW...",
+  "Just one moment without the pain..",
 	"I WISH I HAD SOME PAINKILLERS NOW. FUCK.",
 }
 
@@ -40,7 +40,6 @@ local sharp_pain = {
 	"AAAaaAa",
 	"AaaAAaghf",
 	"aaAaaAaff",
-	"aaahhh",
 	"AAAaaGHHH",
 	"AAAaaAAHH",
 	"AAAaaAAAAAaGHHHH",
@@ -161,7 +160,7 @@ local dislocated_limb = {
 	"I have to get this bone back in.",
 	"No... I have to move it back in place.",
 	"It just hurts so much there. I might need a check up.",
-	"My limb is out of place.",
+	"It's either I move it back into place or ask someone else to do it for me."
 }
 
 local hungry_a_bit = {
@@ -311,7 +310,7 @@ function hg.likely_to_phrase(ply)
 		or (temperature < 31 and 0.5)
 		or (temperature > 38 and 0.5)
 		or (blood < 3000 and 0.3)
-		--or (fear > 0.5 and 0.7)
+		or (fear > 0.5 and 0.7)
 		or (brain > 0.1 and brain * 5)
 		or (fear < -0.5 and 0.05)
 		or -0.1
@@ -359,7 +358,7 @@ local function get_status_message(ply)
 	local str = ""
 
 	local most_wanted_phraselist
-	
+
 	if temperature < 35 then
 		most_wanted_phraselist = temperature > 31 and cold_phraselist or (temperature < 28 and numb_phraselist or freezing_phraselist)
 	elseif temperature > 38 then
@@ -400,14 +399,10 @@ local function get_status_message(ply)
 		if hungry and hungry > 25 and math.random(5) == 1 then
 			most_wanted_phraselist = hungry > 45 and very_hungry or hungry_a_bit
 		end
-	--elseif hg.fearful(ply) then
-		--most_wanted_phraselist = ((IsAimedAt(ply) > 0.9) and is_aimed_at_phrases or (math.random(10) == 1 and fear_hurt_ironic or fear_phrases))
+	elseif hg.fearful(ply) then
+		most_wanted_phraselist = ((IsAimedAt(ply) > 0.9) and is_aimed_at_phrases or (math.random(10) == 1 and fear_hurt_ironic or fear_phrases))
 	end
 
-	if brain > 0.1 then
-		most_wanted_phraselist = brain < 0.2 and slight_braindamage_phraselist or braindamage_phraselist
-	end
-	
 	if most_wanted_phraselist then
 		str = most_wanted_phraselist[math.random(#most_wanted_phraselist)]
 
@@ -416,6 +411,7 @@ local function get_status_message(ply)
 		return ""
 	end
 end
+
 
 local allowedlist_types = {
 	heatvomit = heatvomit_phraselist,
