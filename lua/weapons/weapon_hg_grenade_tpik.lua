@@ -234,7 +234,7 @@ function SWEP:Throw(mul, time, nosound, throwPosAdjust, throwAngAdjust)
 	local eyetr = self:GetEyeTrace()
 	local eyepos = eyetr and eyetr.StartPos or false
 	local ang = IsValid(entOwner) and owner:EyeAngles() or self:GetAngles()
-	local hand = IsValid(entOwner) and eyepos + ang:Forward() * throwPosAdjust[1] + ang:Right() * throwPosAdjust[2] + ang:Up() * throwPosAdjust[3] or self:GetPos()
+	local hand = eyepos and eyepos + ang:Forward() * throwPosAdjust[1] + ang:Right() * throwPosAdjust[2] + ang:Up() * throwPosAdjust[3] or self:GetPos()
 
 	if IsValid(entOwner) then
 		ent:SetOwner(entOwner or game.GetWorld())
@@ -459,7 +459,15 @@ function SWEP:CreateSpoon(entownr)
 
 		if self.SpoonSounds then
 			for k,v in ipairs(self.SpoonSounds) do
-				self:GetOwner():EmitSound(v[1],v[2],v[3])
+				self:GetOwner():EmitSound(v[1], v[2], v[3])
+
+				if v[4] then
+					local effectData = EffectData()
+					effectData:SetOrigin(entasd:GetPos())
+					effectData:SetScale(0.04)
+					effectData:SetEntity(entasd)
+					util.Effect("eff_jack_genericboom", effectData, true, true)
+				end
 			end
 		end
 
@@ -476,7 +484,15 @@ function SWEP:CreateSpoon(entownr)
 
 		if self.SpoonSounds then
 			for k,v in ipairs(self.SpoonSounds) do
-				self:GetOwner():EmitSound(v[1],v[2],v[3])
+				self:GetOwner():EmitSound(v[1], v[2], v[3])
+
+				if v[4] then
+					local effectData = EffectData()
+					effectData:SetOrigin(entasd:GetPos())
+					effectData:SetScale(0.04)
+					effectData:SetEntity(entasd)
+					util.Effect("eff_jack_genericboom", effectData, true, true)
+				end
 			end
 		end
 
