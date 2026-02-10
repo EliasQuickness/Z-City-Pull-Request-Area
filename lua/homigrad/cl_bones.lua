@@ -748,28 +748,13 @@ if CLIENT then
 		print("\n")
 	end
 
-		local hg_tpik_distance = ConVarExists("hg_tpik_distance") and GetConVar("hg_tpik_distance") or CreateClientConVar("hg_tpik_distance",1024,true,false,"The distance (in hammer units) at which the third person inverse kinematics enables, 0 = inf",0,2048)
-
-		local render_GetViewSetup = render.GetViewSetup
-		function hg.ShouldTPIK(ply, wpn)
-			local time = CurTime()
-			if (ply.cachedtpik or 0) > time then return ply.cachedval end
-			ply.cachedtpik = time + 0.1
-
-			local int = hg_tpik_distance:GetInt()
-			if (int == 0 or ply == lply or ply == lply:GetNWEntity("spect")) then
-				ply.cachedval = true
-				return true
-			end
-
-			local view = render.GetViewSetup(true)
-			if (ply:GetPos():DistToSqr(view.origin) > int * int) then
-				ply.cachedval = false 
-				return false
-			end
-
-			ply.cachedval = true
-			return true
+	function hg.copy_holdrh(ply)
+		local lh = ply:LookupBone("ValveBiped.Bip01_R_Hand")
+		local lhmat = ply:GetBoneMatrix(lh)
+		print("\n")
+		for i,bone in pairs(hg.get_children(ply,lh)) do
+			local bon = ply:GetBoneName(bone)
+			print("['"..bon.."'] = Matrix({\n"..string.Replace(string.Replace(tostring(lhmat:GetInverse() * ply:GetBoneMatrix(bone)),"[","{"),"]","},").."\n}),")
 		end
 		print("\n")
 	end
@@ -781,10 +766,19 @@ if CLIENT then
 		local time = CurTime()
 		if (ply.cachedtpik or 0) > time then return ply.cachedval end
 		ply.cachedtpik = time + 0.1
+
 		local int = hg_tpik_distance:GetInt()
-		if (int == 0 or ply == LocalPlayer() or ply == LocalPlayer():GetNWEntity("spect")) then ply.cachedval = true return true end
+		if (int == 0 or ply == lply or ply == lply:GetNWEntity("spect")) then
+			ply.cachedval = true
+			return true
+		end
+
 		local view = render.GetViewSetup(true)
-		if (ply:GetPos():DistToSqr(view.origin) > int*int) then ply.cachedval = false return false end
+		if (ply:GetPos():DistToSqr(view.origin) > int * int) then
+			ply.cachedval = false 
+			return false
+		end
+
 		ply.cachedval = true
 		return true
 	end
@@ -792,4 +786,5 @@ if CLIENT then
 	--copy hold делаешь когда нужно скопировать пальчики левой руки
 	--set hold когда хочешь чтобы пальчики встали ровно как надо по копии (и не двигались)
 	--hg.copy_hold(Entity(1))
+end
 --//
