@@ -30,7 +30,7 @@ end
 
 local huyasd = {
 	["spine1"] = "I don't feel anything below my hips.",
-	["spine2"] = "I cant't feel or move anything below my torso.",
+	["spine2"] = "I can't feel or move anything below my torso.",
 	["spine3"] = "I can't move at all. I can barely even breathe.",
 	["skull"] = "My head is aching.",
 }
