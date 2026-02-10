@@ -433,8 +433,8 @@ hook.Add("RenderScreenspaceEffects", "organism-effects", function()
 			lply:SetDSP(0)
 			plyCommand(lply,"soundfade "..tinnitusSoundFactor2.." 25")
 		elseif lply:Alive() then
-			lply:SetDSP(17)
-			plyCommand(lply,"soundfade 100 25")
+			lply:SetDSP(16)
+			plyCommand(lply,"soundfade 70 25")
 		end
 	else
 		plyCommand(lply,"soundfade "..tinnitusSoundFactor2.." 25")
