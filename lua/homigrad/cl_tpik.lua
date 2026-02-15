@@ -1353,8 +1353,8 @@ function hg.DoTPIK(ply, ent)
         //ent:SetBoneMatrix(ent:LookupBone("ValveBiped.Bip01_L_Wrist"), ply_l_hand_matrix)
     end
     
-    --self.lhandik = false
-    --self.rhandik = false
+    self.lhandik = false
+    self.rhandik = false
 /*
     local ang = ply_r_forearm_matrix:GetAngles()
     ang:RotateAroundAxis(ang:Forward(), 45)
