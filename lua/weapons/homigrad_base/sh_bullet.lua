@@ -260,12 +260,17 @@ local ipairs, ents = ipairs, ents
 local ents_FindInCone = ents.FindInCone
 local vectorup = Vector(0, 0, 25)
 local ang = math.cos( math.rad( 125 ) )
-local function gasInertia(pos, force, dir)
+local function gasInertia(pos, force, dir, self, tr)
 	--if force >= 150 then return end
 	for _, ent in ipairs(ents_FindInCone(pos, dir, force, ang)) do
 		--print(ent)
 		if IsValid(ent) and not ent:IsNPC() and not ent:IsPlayer() then
 			local phys = ent:GetPhysicsObject()
+
+			if (ent:GetClass() == "func_breakable_surf") and !tr.HitPos then
+				--ent:Fire("Shatter", "0.5 0.5 100", 0, self, self)
+			end
+
 			if IsValid(phys) then
 				if phys:GetMass() > 5 then continue end
 				local entpos = ent:GetPos()
@@ -319,8 +324,8 @@ bulletHit = function(ply, tr, dmgInfo, bullet, Weapon)
 			--util.DecalEx(powderMat, world, trPos, trNormal, powderClr, 1, 1) uzelezz said that DecalEx crashing the game..
 		end
 
-		gasInertia(trPos, force * 3, -tr.Normal)
-		gasInertia(trStart, force * 3, tr.Normal)
+		gasInertia(trPos, force * 3, -tr.Normal, Weapon, tr)
+		gasInertia(trStart, force * 3, tr.Normal, Weapon, tr)
 	--end
 
 	timer.Simple(0,function()
