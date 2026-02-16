@@ -83,7 +83,7 @@ function hg.CreateCategory(ctgName, ParentPanel, yPos)
     pppanel.Paint = function(self,w,h)
         surface.SetDrawColor(60,60,60,145)
         surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(Color(42, 42, 42, 184))
+		surface.SetDrawColor(42, 42, 42, 184)
 		surface.DrawRect(0, h-5, w, 5)
     
         draw.SimpleText(ctgName, 'ZCity_Fixed_Medium', w / 2, h / 2, color3, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -110,7 +110,14 @@ function hg.GetConVarType(convar)
 
     return "string"
 end
-
+local clr_1 = Color(255,255,255,104)
+local clr_2 = Color(122,122,122,104)
+local clr_3 = Color(28,28,28)
+local clr_4 = Color(0, 0, 0, 30)
+local clr_5 = Color(30, 29, 29, 30)
+local clr_6 = Color(255, 255, 255, 100)
+local clr_7 = Color(255, 255, 255, 200)
+local clr_8 = Color(70, 130, 180)
 function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
     local convar = GetConVar(convarName)
 
@@ -128,11 +135,11 @@ function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
     pppanel.Paint = function(self,w,h)
         surface.SetDrawColor(43, 43, 43,145)
         surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(Color(47, 47, 47,145))
+		surface.SetDrawColor(47, 47, 47,145)
 		surface.DrawRect(0, h-3, w, 3)
         
-        draw.SimpleText(buttonData[3], 'ZCity_setiings_fine', 30, h / 2, Color(255,255,255,104), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(convar:GetHelpText(), 'ZCity_setiings_tiny', 30, h / 2+height2/1.5, Color(122,122,122,104), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(buttonData[3], 'ZCity_setiings_fine', 30, h / 2 -height2/2.5, clr_1, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(convar:GetHelpText(), 'ZCity_setiings_tiny', 30, h / 2+height2/2, clr_2, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     if convarType == 'bool' then
@@ -158,11 +165,11 @@ function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
             )
             
             local shadowColor = Color(0, 0, 0, Lerp(animProgress, 150, 40))
-            surface.SetDrawColor(Color(28,28,28))
-            draw.RoundedBox(0, 0, 0, w, h, Color(28,28,28))
+            surface.SetDrawColor(clr_3)
+            draw.RoundedBox(0, 0, 0, w, h, clr_3)
             
-            surface.SetDrawColor(Color(30, 29, 29, 30))
-            draw.RoundedBox(0, 2, 2, w - 4, h - 4, Color(0, 0, 0, 30))
+            surface.SetDrawColor(clr_5)
+            draw.RoundedBox(0, 2, 2, w - 4, h - 4, clr_4)
             
             local slsize = h - 12
             local slPos = Lerp(animProgress, 6, w - slsize - 6)
@@ -171,7 +178,7 @@ function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
             surface.SetDrawColor(shadowColor)
             surface.DrawRect(slPos, slsize+4, slsize, 3)
     
-            surface.SetDrawColor(Color(255, 255, 255, 100))
+            surface.SetDrawColor(clr_6)
         end
         
         function toggle:DoClick()
@@ -208,7 +215,7 @@ function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
         valueLabel:SetPos(pppanel:GetWide() - 350, pppanel:GetTall() / 2 - 8)
         valueLabel:SetSize(50, 20)
         valueLabel:SetText(convar:GetInt())
-        valueLabel:SetTextColor(Color(255, 255, 255, 200))
+        valueLabel:SetTextColor(clr_7)
         valueLabel:SetFont('ZCity_setiings_tiny')
         
         slider.Think = function()
@@ -232,7 +239,7 @@ function hg.CreateButton(buttonData, convarName, ParentPanel, yPos)
             surface.SetDrawColor(60, 60, 60, 255)
             surface.DrawOutlinedRect(0, 0, w, h)
             
-            self:DrawTextEntryText(Color(255, 255, 255), Color(70, 130, 180), Color(255, 255, 255))
+            self:DrawTextEntryText(color_white, clr_8, color_white)
         end
         
         function textEntry:OnValueChange(val)
