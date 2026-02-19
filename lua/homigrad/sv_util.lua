@@ -1550,6 +1550,7 @@ hg.MapTemps = {
 	["gm_fork_north_day"] = -21,
 	["gm_ijm_boreas"] = -40,
 	["gm_cozysnowdwelling"] = -10,
+	["gm_cozysnowdwellingnight"] = -16,
 	["mu_calmtime_winter"] = -16,
 	["gm_bbicotka_snow_hmcd"] = -16,
 	["gm_construct"] = 20 -- тест температуры
