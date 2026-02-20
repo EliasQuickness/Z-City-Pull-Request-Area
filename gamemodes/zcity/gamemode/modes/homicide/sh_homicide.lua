@@ -155,7 +155,7 @@ For people who have a plan to kill everyone you meet.]],
 			-- local inv = ply:GetNetVar("Inventory", {})
 			-- inv["Weapons"]["hg_flashlight"] = true
 			
-			ply:SetNetVar("Inventory", inv)
+			--ply:SetNetVar("Inventory", inv)
 		end,
 	},
 	["traitor_assasin_soe"] = {
