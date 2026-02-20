@@ -442,7 +442,7 @@ local doesntwantto = {
 	"Did I.. do something wrong...?",
 	"Please stop pointing that at me...",
 	"Please somehow miss... Please somehow miss...",
-	"Why...?",
+	"Why..?",
 }
 --qol lmao
 function SWEP:CanPrimaryAttack()
