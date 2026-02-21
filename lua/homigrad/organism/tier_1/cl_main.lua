@@ -598,7 +598,7 @@ hook.Add("RenderScreenspaceEffects", "organism-effects", function()
 			"\n<colour=255,"..( critical and 25 or 255 )..","..( critical and 25 or 255 ) ..",255>"..
 			( textOtrub2 ).."\n\n"..( textOtrub3 ).."</colour></font>"
 		)
-		
+
 		--surface.SetTextColor(255,255,255,255)
 		--surface.SetFont("HomigradFontMedium")
 		--local txtSizeX, txtSizeY = surface.GetTextSize(textOtrub)
@@ -606,11 +606,11 @@ hook.Add("RenderScreenspaceEffects", "organism-effects", function()
 		--surface.DrawText(textOtrub)
 
 		parsed:Draw( ScrW()/2, ScrH()/2.2, TEXT_ALIGN_CENTER, nil, nil, TEXT_ALIGN_CENTER )
-		
+
 		render.PopFilterMag()
 		render.PopFilterMin()
 	end
-	
+
 	if IsValid(ent) and ent.Blinking and lply:Alive() then
 		surface.SetDrawColor(0,0,0,255)
 		if amtflashed and amtflashed > 0.1 then

@@ -93,7 +93,7 @@ function WS.WeaponSelectorDraw( ply )
         local Ammout = 0
         local lastPos = 0
 
-        local playercolor = ply:GetPlayerColor():ToColor()
+        local playercolor = ply:GetPlayerColor():ToColor() or Color(155,0,0)
         if playercolor.r >= playercolor.g and playercolor.r >= playercolor.b then
             playercolor.r = math.Clamp(playercolor.r - 35, 0, 255)
         elseif playercolor.g >= playercolor.r and playercolor.g >= playercolor.b then
