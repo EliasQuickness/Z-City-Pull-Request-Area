@@ -1940,7 +1940,7 @@ function SWEP:SetHandPos(noset)
 	end
 	
 	if (ent ~= ply and ent ~= ply.OldRagdoll) then
-		self.lhandik = self.lhandik and !hg.KeyDown(ply, IN_FORWARD + IN_BACK)
+		self.lhandik = self.lhandik and !(hg.KeyDown(ply, IN_FORWARD + IN_BACK) and !self.reload and !ply:InVehicle())
 	end
 
 	--ply:SetIK(false)
