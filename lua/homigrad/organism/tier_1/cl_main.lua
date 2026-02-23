@@ -274,7 +274,6 @@ hook.Add("radialOptions", "DislocatedJaw", function()
 end)
 
 hook.Add("PostRender", "screenshot_think", function()
-	do return end
 	local org = lply.organism
 	
 	if not org or not org.brain or org.otrub or !lply:Alive() then return end
@@ -314,8 +313,7 @@ local braindeathstart = CurTime() + 20
 local lerpedpart = 0
 local lerpedbrain = 0
 
-hook.Add("Post Pre Post Processing", "ShowScreens", function()
-	do return end
+hook.Add("Post Post Pre Post Processing", "ShowScreens", function()
 	local org = lply.organism
 	
 	if !lply:Alive() then return end
@@ -336,7 +334,7 @@ hook.Add("Post Pre Post Processing", "ShowScreens", function()
 			surface.SetDrawColor(255, 255, 255, math.Clamp(lerpedpart * 50, 0, 255))
 			surface.SetMaterial(screens[curscreen])
 			surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
-
+			
 			DrawToyTown(4, ScrH())
 		else
 			if switch then
