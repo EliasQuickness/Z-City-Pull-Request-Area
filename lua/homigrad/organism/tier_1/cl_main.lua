@@ -565,7 +565,7 @@ hook.Add("RenderScreenspaceEffects", "organism-effects", function()
 		render.PushFilterMag( TEXFILTER.ANISOTROPIC )
 		render.PushFilterMin( TEXFILTER.ANISOTROPIC )
 
-		local textOtrub = "You are unconscious. "
+		local textOtrub = "You are unconscious."
 		local textOtrub2 =  
 			( critical and "You can't be saved." ) or 
 			( incapacitated and "You will not get up without someone's help." ) or
