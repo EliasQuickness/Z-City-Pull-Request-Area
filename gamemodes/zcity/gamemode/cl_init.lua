@@ -108,6 +108,8 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 	if not IsValid(spect) then return end
 	if viewmode == 3 then return end
 	if spect.organism == nil then return end -- annoying cilentside lua error if this isn't in the code
+	if spect.organism.brain == nil then return end
+	if spect.PlayerClassName == nil then return end
 
 	surface.SetFont("HomigradFont")
 	surface.SetTextColor(255, 255, 255, 255)
@@ -127,8 +129,8 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 		surface.DrawText(txt)
 	end
 
-	if spect.organism.o2[1] < 15 or spect.organism.jaw == 1 or spect.organism.jawdislocation then
-		local txt = spect:GetPlayerName().." is unable speak to other alive players."
+	if spect.organism.o2[1] < 15 or spect.organism.brain > 0.05 or spect.PlayerClassName and spect.PlayerClassName == "Gordon" then
+		local txt = spect:GetPlayerName().." is unable to speak to other alive players."
 		local w, h = surface.GetTextSize(txt)
 		surface.SetTextPos(ScrW() / 2 - w / 2, ScrH() / 8 * 7 + h + h)
 		surface.DrawText(txt)
