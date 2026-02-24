@@ -670,12 +670,12 @@ function MODE:Intermission()
 	MODE.TraitorFrequency = nil
 	MODE.TraitorWord = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
 	MODE.TraitorWordSecond = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
-	local traitors_needed = 1
+	local traitors_needed = 2
 	
 	if(MODE.ShouldStartRoleRound())then
-		traitors_needed = math.ceil(player_count / 9)
+		traitors_needed = math.ceil(player_count / 6.5)
 		
-		if(player_count > 8 and math.random(1, 8) == 1)then
+		if(player_count > 5 and math.random(1, 8) == 1)then
 			traitors_needed = traitors_needed + 1
 		end
 	end
@@ -1362,7 +1362,7 @@ function MODE:EndRound()
 			if traitor and IsValid(traitor) then
 				--local CheckAlive = #self:CheckAlivePlayers()[1]
 				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Messages[winner]..(winner == 0 and (traitor:Alive() and " neutralized." or " killed.") or ""))
-				
+
 				timer.Simple(2, function()
 					PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Message..traitor:Name())
 				end)
@@ -1374,10 +1374,19 @@ function MODE:EndRound()
 				else
 					traitor:GiveSkill( -math.Rand(0.05,0.1) )
 				end
-				
+
 				hook.Run("ZB_TraitorWinOrNot", traitor, winner)
 			else
 				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Messages[winner]..(winner == 0 and (" killed.") or ""))
+
+				for _, traitor in ipairs(traitors) do
+					net.Start("hmcd_announce_traitor_lose")
+						net.WriteEntity(traitor)
+						net.WriteBool(traitor:Alive())
+					net.Broadcast()
+
+					hook.Run("ZB_TraitorWinOrNot", traitor, winner)
+				end
 			end
 		end
 	end

@@ -388,7 +388,7 @@ function MODE:HUDPaint()
 	end
 
 	if(!lply.MainTraitor and lply.isTraitor)then
-		Objective = "You are equipped with nothing. Help other traitors win."
+		Objective = "You don't know who your partners are. Try to communicate with a radio or with your traitor words"
 	end
 
 	--; WARNING Traitor's objective is not lined up with SubRole's
@@ -446,8 +446,10 @@ net.Receive("hmcd_announce_traitor_lose", function()
 	local traitor = net.ReadEntity()
 	local traitor_alive = net.ReadBool()
 
-	if(IsValid(traitor))then
-		chat.AddText(color_white, "Traitor ", traitor:GetPlayerColor():ToColor(), traitor:GetPlayerName() .. ", " .. traitor:Nick(), color_white, " was " .. (traitor_alive and "arrested." or "killed."))
+	if (IsValid(traitor)) and traitor:GetPlayerName() != traitor:Nick() then
+		chat.AddText(color_white, (traitor_alive and "" or "Traitor "), traitor:GetPlayerColor():ToColor(), traitor:GetPlayerName() .. ", " .. traitor:Nick(), color_white, " was " .. (traitor_alive and "a Traitor." or "killed."))
+	elseif (IsValid(traitor)) and traitor:GetPlayerName() == traitor:Nick() then
+		chat.AddText(color_white, (traitor_alive and "" or "Traitor "), traitor:GetPlayerColor():ToColor(), traitor:GetPlayerName(), color_white, " was " .. (traitor_alive and "a Traitor." or "killed."))
 	end
 end)
 
