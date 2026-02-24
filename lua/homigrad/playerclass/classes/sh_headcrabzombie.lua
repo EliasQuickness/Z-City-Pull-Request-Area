@@ -107,8 +107,9 @@ function CLASS.On(self)
 				self:SetSubMaterial(self:GetSubMaterialIdByName("distac/gloves/players_sheet"), fallbackMats[self.PreZombClass]["main"])
 				self:SetSubMaterial(self:GetSubMaterialIdByName("distac/gloves/pants"), fallbackMats[self.PreZombClass]["pants"])
 				self:SetSubMaterial(self:GetSubMaterialIdByName("distac/gloves/cross"), fallbackMats[self.PreZombClass]["boots"])
+
+				self:SetPlayerColor(clr_darkred:ToVector())
 			end
-			self:SetPlayerColor(clr_darkred:ToVector())
 		end
 
 		self:SetSubMaterial(4, "")
