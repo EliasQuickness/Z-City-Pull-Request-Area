@@ -253,7 +253,7 @@ function CLASS.Think(self)
 		org.painadd = -5
 	end
 
-	if org.pain >= 45 then
+	if org.pain >= 30 then
 		org.consciousness = 1
 		org.adrenalineAdd = 1
 		org.painadd = -15
@@ -261,6 +261,10 @@ function CLASS.Think(self)
 
 	org.pulse = 70
 	org.o2["curregen"] = 2
+
+	if org.brain >= 0.1 then
+		org.brain = 0.05
+	end
 
 	if org.consciousness <= 0.3 then
 		org.consciousness = 1
