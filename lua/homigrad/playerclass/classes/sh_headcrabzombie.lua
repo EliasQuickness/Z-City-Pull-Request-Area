@@ -341,7 +341,8 @@ end)
 
 hook.Add("UpdateAnimation", "ZombAnimRate", function(ply, vel, maxSeqGroundSpeed)
 	if ply.PlayerClassName == "headcrabzombie" then
-		if not IsValid(ply) or not ply:Alive() then return end
+		local isAmputated = ply:IsBerserk() and ply.organism and (ply.organism.llegamputated or ply.organism.rlegamputated)
+		if not IsValid(ply) or not ply:Alive() or isAmputated then return end
 
 		if vel:LengthSqr() >= 77000 and vel:LengthSqr() < 110000 then
 			ply:SetPlaybackRate(1.1)
