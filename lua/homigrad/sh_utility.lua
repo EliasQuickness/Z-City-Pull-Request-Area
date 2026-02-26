@@ -2045,6 +2045,7 @@ local IsValid = IsValid
 		end
 
 		if SERVER then
+
 			if ply:GetNetVar("Armor", {})["torso"] then
 				EmitSound("arc9_eft_shared/weapon_generic_rifle_spin"..math.random(9)..".ogg", pos, ply:EntIndex(), CHAN_AUTO, changePitch(math.min(len / 100, 0.89)), 80)
 			end
@@ -2139,14 +2140,14 @@ local IsValid = IsValid
 			"weapon_hg_stunstick",
 			"weapon_medkit_sh",
 			"weapon_bandage_sh",
-			"weapon_handcuffs",
+			--"weapon_handcuffs",
 			"weapon_walkie_talkie"
 		},
 		["npc_combine_s"] = {
 			"weapon_melee",
 			"weapon_hg_hl2nade_tpik",
 			"weapon_bandage_sh",
-			"weapon_handcuffs"
+			--"weapon_handcuffs"
 		},
 		["npc_citizen"] = {
 			"weapon_smallconsumable",
@@ -2459,7 +2460,7 @@ local IsValid = IsValid
 		["lunasflightschool_ah6"] = {multi = 20, AmmoType = "14.5x114mm BZTM"},
 		["npc_turret_floor"] = {multi = 1.25, AmmoType = "9x19 mm Parabellum"},
 		["npc_sniper"] = {multi = 3, AmmoType = "14.5x114mm BZTM", PenetrationMul = 4},
-		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает( потому что прожектайлами стреляет
+		["npc_hunter"] = {multi = 4, AmmoType = "12/70 RIP", PenetrationMul = 1}, --;; не работает(
 		["npc_turret_ceiling"] = {multi = 1.25, AmmoType = "9x19 mm QuakeMaker"},
 	}
 
@@ -2645,7 +2646,6 @@ duplicator.Allow( "homigrad_base" )
 			else
 				anim = ACT_HL2MP_RUN_FAST
 			end
-
 			return anim, -1
 		end
 
