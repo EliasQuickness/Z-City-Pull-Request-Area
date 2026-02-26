@@ -537,7 +537,7 @@ end
 
 hook.Add("CanListenOthers", "GordonWeDontHearYou", function(talker)
     if talker:Alive() and talker.PlayerClassName == "Gordon" then
-        return false, false 
+        return false, false
     end
 end)
 
