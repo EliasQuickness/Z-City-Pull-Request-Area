@@ -156,6 +156,7 @@ local hg_firstperson_death = ConVarExists("hg_firstperson_death") and GetConVar(
 local hg_firstperson_ragdoll = ConVarExists("hg_firstperson_ragdoll") and GetConVar("hg_firstperson_ragdoll") or CreateConVar("hg_firstperson_ragdoll", 0, FCVAR_ARCHIVE, "Toggle first-person ragdoll camera view", 0, 1)
 local hg_fov = ConVarExists("hg_fov") and GetConVar("hg_fov") or CreateClientConVar("hg_fov", "70", true, false, "Change first-person field of view", 75, 100)
 local hg_gopro = ConVarExists("hg_gopro") and GetConVar("hg_gopro") or CreateClientConVar("hg_gopro", "0", true, false, "Toggle GoPro-like camera view", 0, 1)
+local hg_thirdperson = ConVarExists("hg_thirdperson") and GetConVar("hg_thirdperson") or CreateConVar("hg_thirdperson", 0, FCVAR_REPLICATED, "Toggle third-person camera view", 0, 1)
 
 local k = 0
 local wepPosLerp = Vector(0,0,0)
@@ -272,7 +273,7 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 
 	hg.cam_things(ply, view, angleZero)
 	
-	if hg.RagdollCombatInUse(ply) or (fakeTimer and fakeTimer > CurTime()) then
+	if hg_thirdperson:GetBool() or hg.RagdollCombatInUse(ply) or (fakeTimer and fakeTimer > CurTime()) then
 		if hg_firstperson_death:GetBool() then
 			deathlerp = LerpFT(0.05,deathlerp,1)
 			local angdeath = LerpAngle(deathlerp,deathLocalAng,att_Ang)

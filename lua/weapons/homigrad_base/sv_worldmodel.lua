@@ -13,7 +13,7 @@ function SWEP:CreateWorldModel()
 	model:SetMoveType(MOVETYPE_NONE)
 	model:SetNWBool("nophys", true)
 	model:SetSolidFlags(FSOLID_NOT_SOLID)
-	model:AddEFlags(EFL_NO_DISSOLVE)
+	model:AddEFlags(EFL_NO_DISSOLVE + EFL_NO_DAMAGE_FORCES + EFL_DONTBLOCKLOS)
 	self:DeleteOnRemove(model)
 	self.worldModel = model
 	self:SetLagCompensated(true)
