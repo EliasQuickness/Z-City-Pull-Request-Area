@@ -14,7 +14,7 @@ MODE.OverrideSpawn = true
 MODE.LootSpawn = true
 MODE.LootOnTime = true
 
-MODE.Chance = 0.05
+MODE.Chance = 0.28
 MODE.LootDivTime = 500
 
 MODE.LootTable = {
@@ -268,8 +268,9 @@ MODE.Types.standard = {
 		ply:Give("weapon_traitor_poison3")
 		ply:Give("weapon_traitor_poison_consumable")
 		ply:Give("weapon_traitor_suit")
-		local wep = ply:Give("weapon_zoraki")
-		timer.Simple(1,function() wep:ApplyAmmoChanges(2) end)
+		local wep = ply:Give("weapon_m45")
+		ply:GiveAmmo(wep:GetMaxClip1() * 2,wep:GetPrimaryAmmoType(),true)
+		hg.AddAttachmentForce(ply,wep,"supressor4")
 
 		ply.organism.stamina.range = 220
 
@@ -278,7 +279,8 @@ MODE.Types.standard = {
 		ply:SetNetVar("Inventory",inv)
 	end,
 	GunManLoot = function(ply)
-		ply:Give("weapon_px4beretta")
+		local gun = ply:Give("weapon_px4beretta")
+		ply:GiveAmmo(gun:GetMaxClip1() * 1, gun:GetPrimaryAmmoType(), true)
 		ply.organism.recoilmul = 1
 	end,
 	PoliceTime = 220,
@@ -404,7 +406,7 @@ MODE.Types.wildwest = {
 					"weapon_doublebarrel_short"
 				}
 
-				local weapon = v:Give(guns[math.random(#guns)], true)
+				local weapon = v:Give(table.Random(guns), true)
 				weapon:SetClip1(weapon:GetMaxClip1())
 			end
 
@@ -566,6 +568,7 @@ MODE.Types.soe = {
 		if gun:GetClass() == "weapon_kar98" then
 			hg.AddAttachmentForce(ply,gun,"optic12")
 		end
+		ply:GiveAmmo(gun:GetMaxClip1() * 1, gun:GetPrimaryAmmoType(), true)
 		local inv = ply:GetNetVar("Inventory")
 		inv["Weapons"]["hg_sling"] = true
 		ply:SetNetVar("Inventory",inv)
@@ -638,7 +641,7 @@ end
 function MODE:Intermission()
 	game.CleanUpMap()
 
-	local _, CROUND = CurrentRound()
+	local _,CROUND = CurrentRound()
 
 	if not CROUND or CROUND == "hmcd" then
 		CROUND = table.Random(self:SubModes())
@@ -667,12 +670,12 @@ function MODE:Intermission()
 	MODE.TraitorFrequency = nil
 	MODE.TraitorWord = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
 	MODE.TraitorWordSecond = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
-	local traitors_needed = 1
+	local traitors_needed = 2
 	
 	if(MODE.ShouldStartRoleRound())then
-		traitors_needed = math.ceil(player_count / 9)
+		traitors_needed = math.ceil(player_count / 6.5)
 		
-		if(player_count > 8 and math.random(1, 8) == 1)then
+		if(player_count > 5 and math.random(1, 8) == 1)then
 			traitors_needed = traitors_needed + 1
 		end
 	end
@@ -877,7 +880,7 @@ function MODE:CheckAlivePlayers()
 			continue
 		end
 		
-		if((not ply.isTraitor)and ply.organism and ply.organism.incapacitated)then
+		if(ply.organism and ply.organism.incapacitated)then
 			continue
 		end
 		
@@ -1359,7 +1362,7 @@ function MODE:EndRound()
 			if traitor and IsValid(traitor) then
 				--local CheckAlive = #self:CheckAlivePlayers()[1]
 				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Messages[winner]..(winner == 0 and (traitor:Alive() and " neutralized." or " killed.") or ""))
-				
+
 				timer.Simple(2, function()
 					PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Message..traitor:Name())
 				end)
@@ -1371,10 +1374,19 @@ function MODE:EndRound()
 				else
 					traitor:GiveSkill( -math.Rand(0.05,0.1) )
 				end
-				
+
 				hook.Run("ZB_TraitorWinOrNot", traitor, winner)
 			else
 				PrintMessage(HUD_PRINTTALK, self.Types[self.Type].Messages[winner]..(winner == 0 and (" killed.") or ""))
+
+				for _, traitor in ipairs(traitors) do
+					net.Start("hmcd_announce_traitor_lose")
+						net.WriteEntity(traitor)
+						net.WriteBool(traitor:Alive())
+					net.Broadcast()
+
+					hook.Run("ZB_TraitorWinOrNot", traitor, winner)
+				end
 			end
 		end
 	end
@@ -1570,8 +1582,6 @@ function MODE.SpawnPlayers(spawn_with_subroles)
         end
     end
 
-
-    local all_players = player.GetAll()
     for idx, current_ply in player.Iterator() do
         if(current_ply:Team() != TEAM_SPECTATOR)then
             current_ply.SubRole = nil
