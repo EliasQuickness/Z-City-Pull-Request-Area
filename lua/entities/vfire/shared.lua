@@ -975,7 +975,7 @@ if SERVER then
 						local ent = tr.Entity
 						if vFireIsVFireEnt(ent) then return end
 						local newFeed = self.feed + vFireTakeFuel(ent, 12)
-						if newFeed > 0 then
+						if newFeed > 0 and (!ent:IsPlayer() or hg.GetCurrentCharacter(ent):IsPlayer()) then
 							CreateVFire(ent, tr.HitPos, tr.HitNormal, newFeed, self)
 						end
 					end
@@ -996,7 +996,7 @@ if SERVER then
 					local pos = self:GetPos() + offset
 					local tr = util.QuickTrace(pos, dir)
 					local ent = tr.Entity
-					if tr.Hit and vfireallowspreadon[tr.MatType] and (tr.Fraction > 0 or IsValid(ent)) then
+					if tr.Hit and vfireallowspreadon[tr.MatType] and (tr.Fraction > 0 or IsValid(ent) and (!ent:IsPlayer() or hg.GetCurrentCharacter(ent):IsPlayer())) then
 
 						if vFireIsVFireEnt(ent) then return end
 
