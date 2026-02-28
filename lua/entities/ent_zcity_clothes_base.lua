@@ -112,6 +112,18 @@ end
 --//
 --\\ Wear Unwear functions
     function ENT:Wear(entUser, bDontChangeMaterials, noChange)
+        if !self.Respawned then -- I'M VERRY SORRY FOR THIS SILLY SHIT, BUT GMOD IS BULLSHIT I CAN'T REMOVE ENT FROM PLAYERS CLEANUP ACTUALY I CAN BUT IS MORE JANKY THAN THAT!!!
+            local class = self:GetClass()
+            local ent = ents.Create(class)
+            if !IsValid(ent) then return end
+            ent.Respawned = true
+            ent:Spawn()
+            ent:Wear(entUser, bDontChangeMaterials, noChange)
+
+            SafeRemoveEntity(self)
+            return
+        end
+
         if !noChange then
             local Clothes = entUser:GetNetVar("zc_clothes", {})
             Clothes[#Clothes + 1] = self:EntIndex()
@@ -184,7 +196,7 @@ end
         self:SetEquiped(false)
 
         timer.Simple(0,function()
-            if !IsValid(self) and !IsValid(entUser) then return end
+            if !IsValid(self) or !IsValid(entUser) then return end
             self:SetPos(entUser:IsPlayer() and hg.eyeTrace(entUser).StartPos or entUser:GetPos())
         end)
         if !noChange then
