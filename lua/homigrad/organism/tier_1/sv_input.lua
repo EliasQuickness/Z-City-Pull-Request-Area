@@ -1661,12 +1661,14 @@ function hg.VehicleHitFunc(ent, tr, bullet, details)
 		if detail.boxcalc then
 			lpos, lang, mins, maxs = detail.boxcalc(ent)
 		end
+		
+		if !lpos then continue end
 
 		local pos, ang = LocalToWorld(lpos, lang, ent:GetPos(), ent:GetAngles())
 
 		local hitpos, hitnormal, frac = util.IntersectRayWithOBB(tr.HitPos, tr.Normal * 1000, pos, ang, mins, maxs)
 		
-		debugoverlay.BoxAngles(pos, detail.mins, detail.maxs, ang, 1, color_white)
+		debugoverlay.BoxAngles(pos, mins, maxs, ang, 1, color_white)
 		debugoverlay.Line(tr.HitPos, tr.HitPos + tr.Normal * 1000, 1, color_white, true)
 		
 		if hitpos then
@@ -1680,8 +1682,8 @@ function hg.VehicleHitFunc(ent, tr, bullet, details)
 	return penetration, maxdmg
 end
 
-local defaultEngineMins = Vector(-25, -35, -12)
-local defaultEngineMaxs = Vector(35, 35, 10)
+local defaultEngineMins = Vector(-25, -35, -8)
+local defaultEngineMaxs = Vector(35, 35, 35)
 local defaultEngineOffset = Vector(65, 0, 0)
 hg.vehicledetails = {
 	["prop_vehicle_prisoner_pod"] = {},
@@ -1751,6 +1753,8 @@ hook.Add("Think", "jajaja", function()
 					if detail.boxcalc then
 						lpos, lang, mins, maxs = detail.boxcalc(ent)
 					end
+
+					if !lpos then continue end
 
 					local pos, ang = LocalToWorld(lpos, lang, ent:GetPos(), ent:GetAngles())
 										

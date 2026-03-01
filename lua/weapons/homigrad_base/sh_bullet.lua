@@ -664,7 +664,7 @@ function SWEP:FireBullet()
     bullet.Callback = bulletHit
 
 	local filter = {self, self.worldModel}
-	if owner:InVehicle() then
+	if IsValid(owner) and owner.InVehicle and owner:InVehicle() then
 		local veh = owner:GetVehicle()
 		
 		table.insert(filter, veh)
