@@ -2216,6 +2216,8 @@ local IsValid = IsValid
 				hg.send_bareinfo(newOrg)
 			
 				ent.organism = nil
+
+				rag.armors = ent.armors
 				
 				for k, wep in pairs(loot) do
 					local weapon = weapons.Get(wep)
