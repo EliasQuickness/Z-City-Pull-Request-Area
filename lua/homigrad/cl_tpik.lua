@@ -1132,17 +1132,20 @@ function hg.DoTPIK(ply, ent)
             hg.bone_apply_matrix(ply, ply_r_hand_index, ply_r_hand_matrix)
         end
 
-        local wrst = ent:LookupBone("ValveBiped.Bip01_R_Wrist")
-        local wmat = wrst and ent:GetBoneMatrix(wrst)
-        if wrst and wmat then
-            ang:RotateAroundAxis(ang:Forward(), ply_r_hand_matrix:GetAngles().r + math.NormalizeAngle((eyeang.y - ply_r_hand_matrix:GetAngles().y)) * (math.NormalizeAngle(ply_r_hand_matrix:GetAngles().p)) / 90 - 90)
-            wmat:SetAngles(ang)
-            ent:SetBoneMatrix(wrst, wmat)
-        end
+        local angrotate = math.NormalizeAngle(ply_r_hand_matrix:GetAngles().r + math.NormalizeAngle((eyeang.y - ply_r_hand_matrix:GetAngles().y)) * (math.NormalizeAngle(ply_r_hand_matrix:GetAngles().p)) / 90 - 45)
 
         local wrst = ent:LookupBone("ValveBiped.Bip01_R_Ulna")
         local wmat = wrst and ent:GetBoneMatrix(wrst)
         if wrst and wmat then
+            ang:RotateAroundAxis(ang:Forward(), angrotate * 0.5)
+            wmat:SetAngles(ang)
+            ent:SetBoneMatrix(wrst, wmat)
+        end
+
+        local wrst = ent:LookupBone("ValveBiped.Bip01_R_Wrist")
+        local wmat = wrst and ent:GetBoneMatrix(wrst)
+        if wrst and wmat then
+            ang:RotateAroundAxis(ang:Forward(), angrotate * 0.5)
             wmat:SetAngles(ang)
             ent:SetBoneMatrix(wrst, wmat)
         end
@@ -1306,20 +1309,24 @@ function hg.DoTPIK(ply, ent)
             hg.bone_apply_matrix(ply, ply_l_hand_index, ply_l_hand_matrix)
         end
 
-        local wrst = ent:LookupBone("ValveBiped.Bip01_L_Wrist")
-        local wmat = wrst and ent:GetBoneMatrix(wrst)
-        if wrst and wmat then
-            ang:RotateAroundAxis(ang:Forward(), ply_l_hand_matrix:GetAngles().r + math.NormalizeAngle((eyeang.y - ply_l_hand_matrix:GetAngles().y)) * (math.NormalizeAngle(ply_l_hand_matrix:GetAngles().p)) / 90 - 45)
-            wmat:SetAngles(ang)
-            ent:SetBoneMatrix(wrst, wmat)
-        end
+        local angrotate = math.NormalizeAngle(ply_l_hand_matrix:GetAngles().r + math.NormalizeAngle((eyeang.y - ply_l_hand_matrix:GetAngles().y)) * (math.NormalizeAngle(ply_l_hand_matrix:GetAngles().p)) / 90 - 45)
 
         local wrst = ent:LookupBone("ValveBiped.Bip01_L_Ulna")
         local wmat = wrst and ent:GetBoneMatrix(wrst)
         if wrst and wmat then
-           wmat:SetAngles(ang)
-           ent:SetBoneMatrix(wrst, wmat)
+            ang:RotateAroundAxis(ang:Forward(), angrotate * 0.5)
+            wmat:SetAngles(ang)
+            ent:SetBoneMatrix(wrst, wmat)
         end
+
+        local wrst = ent:LookupBone("ValveBiped.Bip01_L_Wrist")
+        local wmat = wrst and ent:GetBoneMatrix(wrst)
+        if wrst and wmat then
+            ang:RotateAroundAxis(ang:Forward(), angrotate * 0.5)
+            wmat:SetAngles(ang)
+            ent:SetBoneMatrix(wrst, wmat)
+        end
+
         /*if ply_l_ulna_index and ply_l_wrist_index then
             ply_l_ulna_matrix = ent:GetBoneMatrix(ply_l_ulna_index)
 
