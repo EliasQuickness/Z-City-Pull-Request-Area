@@ -1,3 +1,5 @@
+local Angle, Vector, AngleRand, VectorRand, math, hook = Angle, Vector, AngleRand, VectorRand, math, hook
+
 local ENTITY = FindMetaTable("Entity")
 local PLAYER = FindMetaTable("Player")
 
@@ -374,8 +376,6 @@ hg.ConVars = hg.ConVars or {}
 		vp_punch_angle4 = vp_punch_angle4 or Angle()
 		local vp_punch_angle_velocity4 = Angle()
 		vp_punch_angle_last4 = vp_punch_angle_last4 or vp_punch_angle4
-
-		local fuck_you_debil = 0
 
 		function hg.CalculateConsciousnessMul()
 			local consciousness = 1
