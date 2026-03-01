@@ -390,6 +390,29 @@ function hg.AddHarm(ply, harm, reason)
 	ply.harm = ply.harm + harm
 end
 
+function hg.ExplodeHead(ent)
+	if !IsValid(ent) then return end
+
+	local ply = ent:IsRagdoll() and hg.RagdollOwner(ent) or ent
+	if ply:Alive() then ply:Kill() end
+
+	timer.Simple(0, function()
+		local ent = ent:IsRagdoll() and ent or ent:GetNWEntity("RagdollDeath")
+		if not IsValid(ent) then return end
+		--[[if not isbool(ent) then
+			hook.Run("OnHeadExplode", ply, ent)
+		end]]
+
+		Gib_Input(ent, ent:LookupBone("ValveBiped.Bip01_Head1"))
+		
+		ent.organism.headamputated = true
+		ent.headexploded = true
+
+		ent.organism.owner.fullsend = true
+		hg.send_bareinfo(ent.organism)
+	end)
+end
+
 local net, math, hg, IsValid = net, math, hg, IsValid
 local takeRagdollDamage
 hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
@@ -992,18 +1015,7 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 			should = org.dmgstack[hitgroup][1] > hitgroup_max
 			--print(rag, should, hitgroup == HITGROUP_HEAD, bonename, hitgroup, HITGROUP_HEAD)
 			if should and hitgroup == HITGROUP_HEAD then
-				--[[if not IsValid(ply) then
-					ply = hg.RagdollOwner(rag)
-				end
-				if not isbool(ply) then
-					hook.Run("OnHeadExplode", ply, rag)
-				end]]
-
-				Gib_Input(rag, rag:TranslatePhysBoneToBone(bone), dirCool * len)
-
-				rag.headexploded = true
-				org.headamputated = true
-				rag.organism.headamputated = true
+				hg.ExplodeHead(ent)
 
 				org.dmgstack[hitgroup][1] = nil
 				org.dmgstack[hitgroup][2] = nil
