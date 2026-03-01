@@ -1498,7 +1498,7 @@ hg.postureFunctions2 = {
 		self.AdditionalPosPreLerp[1] = self.AdditionalPosPreLerp[1] - 5 + (pistolRun and (isLocal and (epicRunY or (running and 6 or 4)) or 8 + (ply:GetNWFloat("InLegKick", 0) and -5 or 0)) or (isLocal and 8 or 2 + (ply:GetNW2Float("InLegKick", 0) and 8 or 0)) ) + 3 * math.Clamp(-ply:EyeAngles()[1] / 20, self:IsPistolHoldType() and -2 or -2, 0)
 		self.AdditionalPosPreLerp[3] = self.AdditionalPosPreLerp[3] + 3 + (pistolRun and (isLocal and (epicRunX or 2) or 0) or 0)
 		
-		if not self:IsPistolHoldType() then
+		if not pistolRun then
 			self.AdditionalPosPreLerp[1] = self.AdditionalPosPreLerp[1] + -9
 			self.AdditionalPosPreLerp[2] = self.AdditionalPosPreLerp[2] + -6
 			self.AdditionalPosPreLerp[3] = self.AdditionalPosPreLerp[3] + -3
