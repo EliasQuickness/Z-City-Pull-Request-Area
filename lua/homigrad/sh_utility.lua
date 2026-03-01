@@ -2178,7 +2178,11 @@ local IsValid = IsValid
 			["npc_citizen"] = {"Refugee", Vector(255, 155, 0) / 255}
 		}
 
+		local hg_organismnpcs = CreateConVar("hg_organismnpcs", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED + FCVAR_NOTIFY, "NPCs will have organism system like the players", 0, 1)
+
 		hook.Add("OnEntityCreated", "npcorg", function(ent)
+			if !hg_organismnpcs:GetBool() then return end
+			
 			if ent:IsNPC() and lootNPCs[ent:GetClass()] then
 				hg.organism.Add(ent)
 				hg.organism.Clear(ent.organism)
@@ -2203,20 +2207,22 @@ local IsValid = IsValid
 				rag.inventory = {}
 				rag.inventory.Weapons = {}
 			
-				local newOrg = hg.organism.Add(rag)
-				table.Merge(newOrg, ent.organism)
-		
-				hook.Run("RagdollDeath", ent, rag)
-		
-				table.Merge(zb.net.list[rag], zb.net.list[ent])
-		
-				newOrg.alive = false
-				newOrg.owner = rag
-				rag:CallOnRemove("organism", hg.organism.Remove, rag)
-				newOrg.owner.fullsend = true
-				hg.send_bareinfo(newOrg)
+				if ent.organism then
+					local newOrg = hg.organism.Add(rag)
+					table.Merge(newOrg, ent.organism)
 			
-				ent.organism = nil
+					hook.Run("RagdollDeath", ent, rag)
+			
+					table.Merge(zb.net.list[rag], zb.net.list[ent])
+			
+					newOrg.alive = false
+					newOrg.owner = rag
+					rag:CallOnRemove("organism", hg.organism.Remove, rag)
+					newOrg.owner.fullsend = true
+					hg.send_bareinfo(newOrg)
+				
+					ent.organism = nil
+				end
 
 				rag.armors = ent.armors
 				
