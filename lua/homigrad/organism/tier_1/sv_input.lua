@@ -474,7 +474,7 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 		end
 	end--]]
 	
-	if ent:IsNPC() and npcDmg[ent:GetClass()] then hg.NPCDamage(ent,dmgInfo,npcDmg[ent:GetClass()]) return end
+	--if ent:IsNPC() and npcDmg[ent:GetClass()] then hg.NPCDamage(ent,dmgInfo,npcDmg[ent:GetClass()]) return end
 	if ent:IsPlayer() and IsValid(ent.FakeRagdoll) then ent.FakeRagdoll:TakeDamageInfo(dmgInfo) return true end
 	
 	if dmgInfo:IsDamageType(DMG_CRUSH) then
@@ -1110,7 +1110,7 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 		end
 	end
 	
-	return true
+	return !ent:IsNPC()
 end)
 
 hook.Add("CanEquipArmor", "HeadcrabArmorCD", function(ply, armor_name)

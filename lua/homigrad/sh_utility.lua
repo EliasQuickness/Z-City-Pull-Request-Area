@@ -2138,55 +2138,101 @@ local IsValid = IsValid
 	end)
 --//
 --\\ Lootable npcs
-	local lootNPCs = {
-		["npc_metropolice"] = {
-			"weapon_hg_stunstick",
-			"weapon_medkit_sh",
-			"weapon_bandage_sh",
-			"weapon_handcuffs",
-			"weapon_walkie_talkie"
-		},
-		["npc_combine_s"] = {
-			"weapon_melee",
-			"weapon_hg_hl2nade_tpik",
-			"weapon_bandage_sh",
-			"weapon_handcuffs"
-		},
-		["npc_citizen"] = {
-			"weapon_smallconsumable",
-			"weapon_bandage_sh",
-			"weapon_painkillers"
+	if SERVER then
+		local lootNPCs = {
+			["npc_metropolice"] = {
+				"weapon_hg_stunstick",
+				"weapon_medkit_sh",
+				"weapon_bandage_sh",
+				"weapon_handcuffs",
+				"weapon_walkie_talkie"
+			},
+			["npc_combine_s"] = {
+				"weapon_melee",
+				"weapon_hg_hl2nade_tpik",
+				"weapon_bandage_sh",
+				"weapon_handcuffs"
+			},
+			["npc_citizen"] = {
+				"weapon_smallconsumable",
+				"weapon_bandage_sh",
+				"weapon_painkillers"
+			}
 		}
-	}
+		local funcspawnNPCs = {
+			["npc_combine_s"] = function(ent)
+				ent.organism.CantCheckPulse = true
 
-	local nameNPCs = {
-		["npc_metropolice"] = {"Metrocop", Vector(0, 100, 255) / 255},
-		["npc_combine_s"] = {"Combine", Vector(0, 180, 180) / 255},
-		["npc_citizen"] = {"Refugee", Vector(255, 155, 0) / 255}
-	}
+				--;; Армор
+				ent.armors = {}
+				ent.armors["torso"] = "cmb_armor"
+				ent.armors["head"] = "cmb_helmet"
+				ent:SyncArmor()
+			end,
+		}
 
-	hook.Add("CreateEntityRagdoll", "npcloot", function(ent, rag)
-		local loot = lootNPCs[ent:GetClass()]
-		rag:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-		if IsValid(ent) and IsValid(rag) and ent:IsNPC() and loot then
-			rag.inventory = {}
-			rag.inventory.Weapons = {}
+		local nameNPCs = {
+			["npc_metropolice"] = {"Metrocop", Vector(0, 100, 255) / 255},
+			["npc_combine_s"] = {"Combine", Vector(0, 180, 180) / 255},
+			["npc_citizen"] = {"Refugee", Vector(255, 155, 0) / 255}
+		}
 
-			for k, wep in pairs(loot) do
-				local weapon = weapons.Get(wep)
-				if rag.inventory.Weapons and rag.inventory.Weapons[wep] then return end
-				rag.inventory.Weapons = rag.inventory.Weapons or {}
-				rag.inventory.Weapons[wep] = weapon and weapon.GetInfo and weapon:GetInfo() or true
-				rag:SetNetVar("Inventory", rag.inventory)
+		hook.Add("OnEntityCreated", "npcorg", function(ent)
+			if ent:IsNPC() and lootNPCs[ent:GetClass()] then
+				hg.organism.Add(ent)
+				hg.organism.Clear(ent.organism)
+				ent.organism.fakePlayer = true
+
+				if funcspawnNPCs[ent:GetClass()] then
+					funcspawnNPCs[ent:GetClass()](ent)
+				end
 			end
+		end)
 
-			rag:SetNWString("PlayerName", nameNPCs[ent:GetClass()][1])
-			rag:SetNWVector("PlayerColor", nameNPCs[ent:GetClass()][2])
-			rag.GetPlayerName = function()
-				return nameNPCs[ent:GetClass()][1]
+		--[[hook.Add("EntityTakeDamage", "npcdmg", function(ent, dmgInfo)
+			if ent:IsNPC() then
+				hg.organism.AddWound(ent, tr, bone, dmgInfo, dmgPos, hook_info.bleed, inputHole, outputHole)
 			end
-		end
-	end)
+		end)--]]
+
+		hook.Add("CreateEntityRagdoll", "npcloot", function(ent, rag)
+			local loot = lootNPCs[ent:GetClass()]
+			rag:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+			if IsValid(ent) and IsValid(rag) and ent:IsNPC() and loot then
+				rag.inventory = {}
+				rag.inventory.Weapons = {}
+			
+				local newOrg = hg.organism.Add(rag)
+				table.Merge(newOrg, ent.organism)
+		
+				hook.Run("RagdollDeath", ent, rag)
+		
+				table.Merge(zb.net.list[rag], zb.net.list[ent])
+		
+				newOrg.alive = false
+				newOrg.owner = rag
+				rag:CallOnRemove("organism", hg.organism.Remove, rag)
+				newOrg.owner.fullsend = true
+				hg.send_bareinfo(newOrg)
+			
+				ent.organism = nil
+				
+				for k, wep in pairs(loot) do
+					local weapon = weapons.Get(wep)
+					if rag.inventory.Weapons and rag.inventory.Weapons[wep] then return end
+					rag.inventory.Weapons = rag.inventory.Weapons or {}
+					rag.inventory.Weapons[wep] = weapon and weapon.GetInfo and weapon:GetInfo() or true
+					rag:SetNetVar("Inventory", rag.inventory)
+				end
+
+				rag:SetNWString("PlayerName", nameNPCs[ent:GetClass()][1])
+				rag:SetNWVector("PlayerColor", nameNPCs[ent:GetClass()][2])
+				rag.GetPlayerName = function()
+					return nameNPCs[ent:GetClass()][1]
+				end
+			end
+		end)
+	end
 
 	if SERVER then --// Force enable npc serverside ragdolls
 		RunConsoleCommand("ai_serverragdolls", "1")
