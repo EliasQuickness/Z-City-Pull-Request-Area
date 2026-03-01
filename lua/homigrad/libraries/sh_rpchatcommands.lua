@@ -1,4 +1,4 @@
-if engine.ActiveGamemode() == "sandbox" then -- Now this check is real as Zelensky snort coke. 
+if engine.ActiveGamemode() == "sandbox" then
     if CLIENT then
         local commands = {
             ["/qa"] = function(msg, ply)
