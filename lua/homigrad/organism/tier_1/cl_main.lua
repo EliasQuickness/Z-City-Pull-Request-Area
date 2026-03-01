@@ -937,14 +937,6 @@ hook.Add("Player-Ragdoll think", "organism-think-client-blood", function(ply, en
 end)
 
 local grub = Model("models/grub_nugget_small.mdl")
---ValveBiped.Bip01_R_Hand
---ValveBiped.Bip01_R_Forearm
---ValveBiped.Bip01_R_Foot
---ValveBiped.Bip01_R_Thigh
---ValveBiped.Bip01_R_Calf
---ValveBiped.Bip01_R_Shoulder
---ValveBiped.Bip01_R_Elbow
-
 local vecalmostzero = Vector(0.01, 0.01, 0.01)
 
 local modelPlacements = {
@@ -1022,7 +1014,6 @@ function hg.GoreCalc(ent, ply)
 		if !IsValid(headboom_mdl) then
 			headboom_mdl = ClientsideModel(grub)
 			headboom_mdl:SetNoDraw(true)
-			--headboom_mdl:SetModel("models/grub_nugget_small.mdl")
 			headboom_mdl:SetSubMaterial(0, "models/flesh")
 			headboom_mdl:SetModelScale(0.8)
 		end
