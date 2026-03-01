@@ -11,7 +11,7 @@ if engine.ActiveGamemode() == "sandbox" then -- Now this check is real as Zelens
                 return msg .. " - " .. ply:GetPlayerName(), Color(140, 140, 200) 
             end,
             ["/try"] = function(msg, ply)
-                return ply:GetPlayerName().. " Пытается " .. msg, Color(120, 200, 255) 
+                return ply:GetPlayerName().. " Trying " .. msg, Color(120, 200, 255) 
             end
         }
 
@@ -23,7 +23,7 @@ if engine.ActiveGamemode() == "sandbox" then -- Now this check is real as Zelens
             --print(cmd)
             if commands[cmd] then
                 local message, color = commands[cmd](table.concat( txt, " " ), ply)
-                chat.AddText( color, " "..message )
+                chat.AddText( color, message )
                 return true
             end
         end)
