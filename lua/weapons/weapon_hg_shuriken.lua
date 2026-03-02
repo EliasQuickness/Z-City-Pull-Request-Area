@@ -103,7 +103,7 @@ function SWEP:Initialize()
 		self:SetHold(self.HoldType)
 	end
 
-	hg.weapons2[self] = true
+	--hg.weapons2[self] = true
 	self.count = 1
 end
 
