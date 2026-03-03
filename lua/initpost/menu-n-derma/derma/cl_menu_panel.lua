@@ -129,7 +129,7 @@ local clr_verygray = Color(10,10,19,235)
 
 function PANEL:Init()
     self:SetAlpha(0)
-    self:SetSize(ScrW(), ScrH())
+    self:SetSize(ScrW(), ScrH() + 50)
     self:Center()
     self:SetTitle("")
     self:SetDraggable(false)
