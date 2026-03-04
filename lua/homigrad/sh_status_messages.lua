@@ -65,6 +65,10 @@ local random_phrase = {
 	"Breathing feels oddly satisfying right now.",
 	"What if this quiet lasts forever?",
 	"Why isn't anything happening?",
+	"Why was I here again?",
+	"Nothing noteworthy happening...",
+	"Lost my train of thought...",
+	"Just me and my thoughts... Yep...",
 }
 
 local fear_hurt_ironic = {

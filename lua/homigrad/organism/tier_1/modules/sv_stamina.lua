@@ -41,7 +41,7 @@ module[2] = function(owner, org, timeValue)
 		end
 
 		if (org.chest > 0.25) then
-			//org.owner:Notify("Breathing is painful. Something is wrong with my ribs.", 60, "painfromribs", 0, nil, Color(255, 210, 210))
+			--org.owner:Notify("Why... am I... so out of breath... from a simple jog..?", 360, "painfromribs", 0, nil, Color(255, 210, 210))
 		end
 	end
 
