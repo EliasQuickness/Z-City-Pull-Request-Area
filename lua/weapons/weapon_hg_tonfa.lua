@@ -12,11 +12,12 @@ SWEP.WorldModelExchange = "models/weapons/tacint_melee/w_tonfa.mdl"
 SWEP.ViewModel = ""
 
 SWEP.HoldType = "melee"
+SWEP.weight = 0.6
 
 SWEP.HoldPos = Vector(-12,0,0)
 SWEP.HoldAng = Angle(0,0,0)
 
-SWEP.AttackTime = 0.4
+SWEP.AttackTime = 0.345
 SWEP.AnimTime1 = 1.3
 SWEP.WaitTime1 = 1
 SWEP.ViewPunch1 = Angle(0,-5,3)
