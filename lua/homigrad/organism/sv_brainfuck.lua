@@ -52,7 +52,7 @@ local fencingLegBones = {
 
 local function getRandomSpasm()
 	local _, stype = hg.WeightedRandomSelect(spasmTypes, 1)
-	print(stype)
+	--print(stype)
 	return stype
 end
 
