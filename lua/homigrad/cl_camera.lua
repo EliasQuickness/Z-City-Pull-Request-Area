@@ -501,10 +501,13 @@ CalcView = function(ply, origin, angles, fov, znear, zfar)
 	view.origin, view.angles = HGAddView(ply, view.origin, view.angles, velLen)
 	--end
 	
-	if hg_coolcamera:GetBool() then
+	realangle = realangle or lply:EyeAngles()
+
+	if GetCoolCameraBool() then
 		view.angles = realangle + GetViewPunchAngles() * 0.2 + vpang
 		view.angles[3] = view.angles[3] - GetViewPunchAngles4()[3]
 	end
+
 	view.angles:RotateAroundAxis(view.angles:Up(),-LookX)
 	view.angles:RotateAroundAxis(view.angles:Right(),-LookY)
 	--[[if lply:InVehicle() then
