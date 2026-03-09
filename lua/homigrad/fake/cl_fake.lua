@@ -27,6 +27,7 @@ hook.Add("InputMouseApply", "fakeCameraAngles", function(cmd, x, y, angle)
 	if cc then
 		realanglelerp = realanglelerp or angle
 		diff = diff + realanglelerp + GetViewPunchAngles2() * 1 + GetViewPunchAngles() * 1 + GetViewPunchAngles3() * 1 + GetViewPunchAngles4() * 1 - angle
+		diff.r = 0
 		realangle = realangle and (realangle - diff) or angle
 		realangle:Normalize()
 		angle = realangle
@@ -69,7 +70,6 @@ hook.Add("InputMouseApply", "fakeCameraAngles", function(cmd, x, y, angle)
 		if !IsValid(lply.FakeRagdoll) then angle[1] = math.Clamp(angle[1], -89, 89) end
 		realangle = realangle + diff
 		diff = LerpAngleFT(0.01, diff, angle_zero)
-		diff.roll = LerpFT(0.1, diff.roll, 0)
 		cmd:SetViewAngles(angle)
 	else
 		cmd:SetViewAngles(angle)
@@ -143,8 +143,8 @@ hook.Add("HG.InputMouseApply", "fakeCameraAngles2", function(tbl)
 	rollang = follow == lply.OldRagdoll and 0 or rollang
 	angle2.roll = rollang
 	
-	if GetGlobalBool("hg_shitty_fake", true) and math.abs(math.AngleDifference(rollang, angle.roll)) < 60 then
-		angle = LerpAngleFT(follow == lply.OldRagdoll and 0.05 or 0.01, angle, angle2)--math.Approach(angle.roll, rollang, adda * ftlerped * 80)
+	if GetGlobalBool("hg_shitty_fake", true) then
+		angle = LerpAngleFT(follow == lply.OldRagdoll and 0.1 or 0.01, angle, angle2)--math.Approach(angle.roll, rollang, adda * ftlerped * 80)
 	end
 
 	local fucke = false--!hg_newfakecam:GetBool()
