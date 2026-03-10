@@ -77,7 +77,7 @@ hook.Add( "OnEntityCreated", "SniperShit", function( ent )
 		if ent:GetClass() ~= "npc_sniper" then return end
 		
 		--;; Stupid flags 
-		ent:SetKeyValue( "misses", "0" )  
+		ent:SetKeyValue( "misses", "1" )  
 		ent:SetKeyValue( "PaintInterval", "0.1" ) 
 		ent:SetKeyValue( "PaintIntervalVariance", "0" ) 
 		
