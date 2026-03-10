@@ -22,21 +22,21 @@ local function FindAirdropPosition()
             table.insert(validPlayers, ply)
         end
     end
-
+    
     if #validPlayers == 0 then return nil end
-
+    
     local centerPos = Vector(0, 0, 0)
     for _, ply in ipairs(validPlayers) do
         centerPos = centerPos + ply:GetPos()
     end
     centerPos = centerPos / #validPlayers
+    
 
-
-    local attempts = 20
+    local attempts = 20 
     for i = 1, attempts do
         local randomOffset = Vector(math.random(-800, 800), math.random(-800, 800), 0)
         local dropPos = centerPos + randomOffset
-
+        
 
         local skyCheckHeight = 4000
 
@@ -45,7 +45,7 @@ local function FindAirdropPosition()
             endpos = dropPos,
             mask = MASK_SOLID
         })
-
+        
 
         if skyTrace.HitSky or not skyTrace.Hit then
             local groundTrace = util.TraceLine({
@@ -367,7 +367,7 @@ local function RespawnDeadPlayers(requester)
     end
     
 
-    local spawnPoints = MODE.GetUsualPlayerSpawnPoints and MODE:GetUsualPlayerSpawnPoints() or {}
+    local spawnPoints = zb.GetMapPoints("PLY_DEFENSE_SPAWN")
     if not spawnPoints or #spawnPoints == 0 then
         if IsValid(requester) then
             requester:ChatPrint("No spawn points available!")
@@ -443,18 +443,12 @@ local function RespawnDeadPlayers(requester)
         if IsValid(ply) and not ply:Alive() and ply:Team() != TEAM_SPECTATOR then
 
             local spawnPoint = spawnPoints[math.random(#spawnPoints)]
-            local spawnPos = MODE.GetGroundedPlayerSpawn and MODE:GetGroundedPlayerSpawn(spawnPoint) or spawnPoint.pos
             
 
             ply:Spawn()
             
 
-            ply:SetPos(spawnPos)
-            ply:SetLocalVelocity(vector_origin)
-
-            if spawnPoint.ang then
-                ply:SetEyeAngles(Angle(0, spawnPoint.ang.y, 0))
-            end
+            ply:SetPos(spawnPoint.pos)
             
 
             ply:SetSuppressPickupNotices(true)
@@ -498,7 +492,7 @@ local function RespawnDeadPlayers(requester)
         
         timer.Simple(2, function()
             for _, ply in player.Iterator() do
-                if not IsValid(ply) then return end
+				if not IsValid(ply) then return end
                 ply:StopSound("ambient/alarms/combine_bank_alarm_loop1.wav")
             end
         end)
