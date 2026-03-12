@@ -43,7 +43,7 @@ end
 
 -- NPC SHIT
 function SWEP:GetNPCBulletSpread()
-	return 10
+	return 30
 end
 
 function SWEP:GetNPCBurstSettings()
