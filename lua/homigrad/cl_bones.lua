@@ -759,7 +759,19 @@ if CLIENT then
 		print("\n")
 	end
 
-	local hg_tpik_distance = ConVarExists("hg_tpik_distance") and GetConVar("hg_tpik_distance") or CreateClientConVar("hg_tpik_distance",1024,true,false,"The distance (in hammer units) at which the third person inverse kinematics enables, 0 = inf",0,2048)
+		local hg_tpik_distance = ConVarExists("hg_tpik_distance") and GetConVar("hg_tpik_distance") or CreateClientConVar("hg_tpik_distance",1024,true,false,"The distance (in hammer units) at which the third person inverse kinematics enables, 0 = inf",0,2048)
+
+		local render_GetViewSetup = render.GetViewSetup
+		function hg.ShouldTPIK(ply)
+			local time = CurTime()
+			if (ply.cachedtpik or 0) > time then return ply.cachedval end
+			ply.cachedtpik = time + 0.1
+
+			local int = hg_tpik_distance:GetInt()
+			if (int == 0 or ply == lply or ply == lply:GetNWEntity("spect")) then
+				ply.cachedval = true
+				return true
+			end
 
 	local render_GetViewSetup = render.GetViewSetup
 	function hg.ShouldTPIK(ply, wpn)
