@@ -445,33 +445,14 @@ local CantDoIt = {
 	"What am i even doing? I can't do this."
 }
 
-local doesntwantto = {
-	"Please don't do this.",
-	"I don't want to die... Please.",
-	"...",
-	"Please don't pull the trigger...",
-	"Please spare me...",
-	"Did I.. do something wrong...?",
-	"Please stop pointing that at me...",
-	"Please somehow miss... Please somehow miss...",
-	"Why..?",
-}
 --qol lmao
 function SWEP:CanPrimaryAttack()
 	local owner = self:GetOwner()
-	local random = math.random(1,2)
 	if !IsValid(owner) then return end
 
 	if owner.PlayerClassName and owner.PlayerClassName == "furry" and owner.suiciding then
 		if SERVER then
 			owner:Notify(table.Random(CantDoIt), 20, "cantdoit", 0)
-		end
-		return false
-	end
-
-	if owner.suiciding and random == 1 then
-		if SERVER then
-			owner:Notify(table.Random(doesntwantto), 20, "doesntwantto", 0)
 		end
 		return false
 	end
@@ -491,15 +472,6 @@ if SERVER then
 		if (!wep.ishgweapon and !wep.ismelee2) or !wep.CanSuicide then ply.suiciding = false end
 	end)
 end
---[[
-if SERVER then
-	hook.Add("Player Think","aborting suicide",function(ply)
-	if !ply.suiciding then return end
-	if ply.suiciding then
-		ply:Notify( math.random(1,2) == 1 and "test" or "awesome", 1, "test2", 0, nil, Color(200, 55, 55)) end
-	end)
-end
-]]
 
 function SWEP:PrimaryShootPre()
 end
