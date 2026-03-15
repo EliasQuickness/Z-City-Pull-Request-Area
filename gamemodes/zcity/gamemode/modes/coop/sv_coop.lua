@@ -490,6 +490,22 @@ function MODE:CanLaunch()
     return #triggers > 0 and IsValid(triggers[1])
 end
 
+local preventiontext = {
+    "It has already started.",
+    "\"What... What am I turning into???\"",
+    "\"MAKE IT STOP!\"",
+    "\"HELP ME PLEASE!\"",
+    "\"Please someone...\"",
+    "\"I don't want to turn into one of them... Please...\""
+}
+
+function MODE:CanPlayerSuicide(ply)
+	if IsValid(ply) and ply:IsPlayer() and ply:GetNWString("PlayerName") == "Body with headcrab" then
+		ply:ChatPrint(preventiontext[math.random(#preventiontext)])
+		return false
+	end
+end
+
 local friendlyNPCClasses = {
     ["npc_citizen"] = true,
 }
