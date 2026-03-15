@@ -444,7 +444,6 @@ local CantDoIt = {
 	"I... Cannot bring myself to do this.",
 	"What am i even doing? I can't do this."
 }
-
 --qol lmao
 function SWEP:CanPrimaryAttack()
 	local owner = self:GetOwner()
@@ -1124,13 +1123,13 @@ local gamemod = engine.ActiveGamemode()
 function SWEP:CoreStep()
 	local owner = self:GetOwner()
 	local actwep = owner.GetActiveWeapon and owner:GetActiveWeapon() or nil
-
+	
 	if CLIENT and IsValid(self:GetWeaponEntity()) then self:GetWeaponEntity():SetLOD(0); end
 
 	if self:GetClass() == "weapon_taser" then
 		self:WorldModel_Transform()
 	end
-
+	
 	if SERVER and (not IsValid(owner) or (IsValid(actwep) and self != actwep)) then
 		self:SetNWBool("IsResting", false)
 
@@ -2024,9 +2023,9 @@ end
 
 function SWEP:InUse()
 	local ply = self:GetOwner()
-
+	
 	if !IsValid(ply) then return false end
-
+	
 	local ent = IsValid(ply.FakeRagdoll) and ply.FakeRagdoll or ply
 	local org = ply.organism
 
@@ -2223,7 +2222,6 @@ function SWEP:SetHandPos(noset)
 				local hold = self.hold_type or (self:IsPistolHoldType() and "pistol_hold2" or "ak_hold")
 				hold = self.attachments.grip and #self.attachments.grip ~= 0 and hg.attachments.grip[self.attachments.grip[1]].hold or hold
 
-
 				hg.set_hold(ent, hold)
 			end
 		end
@@ -2343,7 +2341,7 @@ function SWEP:PlayAnim(anim, data, cycling, callback, reverse, sendtoclient)
 	end
 	
 	local mdl = self:GetWM()
-    self.tries = 10
+	self.tries = 10
 	self.seq = self.AnimList[anim] or anim
 	mdl:SetSequence(self.seq)
     self.animtime = CurTime() + time - start
