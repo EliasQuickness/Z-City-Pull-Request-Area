@@ -5,9 +5,6 @@ local PLAYER = FindMetaTable("Player")
 
 hg.ConVars = hg.ConVars or {}
 
-local hg_bulletholes = CreateConVar("hg_bulletholes", "0", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED, "Enable R6S bulletholes feature", 0, 1)
-hg.ConVars.hg_bulletholes = hg_bulletholes
-
 --\\ Is Changed
 	local ChangedTable = {}
 

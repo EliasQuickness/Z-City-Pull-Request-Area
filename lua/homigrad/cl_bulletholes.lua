@@ -7,22 +7,24 @@ local coltransparent = Color(0, 0, 0, 0)
 
 local trace
 local center = Vector()
-local timershit = CurTime()
+local timershit = 0
+
+hg.ConVars = hg.ConVars or {}
 
 local hg_bulletholesfps = CreateConVar("hg_bulletholesfps", "0", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED, "How much fps should the view inside bullet holes be (0 = max)", 0, 300)
-hg.ConVars.hg_bulletholesfps = hg_bulletholesfps
+local hg_bulletholes = CreateConVar("hg_bulletholes", "0", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED, "Enable R6S bulletholes feature", 0, 1)
 
 hook.Add("PostRender", "getimagebullethole", function()
-    if !hg.ConVars.hg_bulletholes:GetBool() then return end
+    if !hg_bulletholes:GetBool() then return end
     local holes = GetNetVar("BulletHoles")
-
+    
     seena = false
 
     if hg_bulletholesfps:GetInt() != 0 then
         if timershit > CurTime() then return end
         timershit = CurTime() + 1 / hg_bulletholesfps:GetInt()
     end
-
+    
     if !holes then return end
     if drawing then return end
 
@@ -93,7 +95,7 @@ hook.Add("PostRender", "getimagebullethole", function()
 end)
 
 hook.Add("PreDrawEffects","bulletholes-test",function()
-    if !hg.ConVars.hg_bulletholes:GetBool() then return end
+    if !hg_bulletholes:GetBool() then return end
     local holes = GetNetVar("BulletHoles")
     
     if !holes then return end

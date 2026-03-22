@@ -48,8 +48,8 @@ if SERVER then
 end
 
 local bulletHit
---local hg_bulletholes = GetConVar("hg_bulletholes") or CreateClientConVar("hg_bulletholes", "150", true, false, "0-500, amount of bullet hole effects (r6s-like)", 0, 500)
 local timer, util, math, IsValid, WorldToLocal, Vector, sound, EffectData, game = timer, util, math, IsValid, WorldToLocal, Vector, sound, EffectData, game
+local hg_bulletholes = CreateConVar("hg_bulletholes", "0", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED, "Enable R6S bulletholes feature", 0, 1)
 
 local function callbackBullet(self, tr, dmg, force, bullet, penetration)
 	if CLIENT then return end
@@ -145,11 +145,9 @@ local function callbackBullet(self, tr, dmg, force, bullet, penetration)
 			
 			self:FireLuaBullets( tBullet )
 
-			if hg.ConVars.hg_bulletholes:GetBool() then
+			if hg_bulletholes:GetBool() then
 				local ent = IsValid(tr.Entity) and tr.Entity or Entity(0)
-				
-				--if #hg.bulletholes > hg_bulletholes:GetInt() then table.remove(hg.bulletholes,1) table.remove(hg.bulletholes,1) end
-				
+								
 				local hitPos2, dir2 = WorldToLocal(hitPos, dir:Angle(), ent:GetPos(), ent:GetAngles())
 				local _, hitNormal2 = WorldToLocal(hitPos, hitNormal:Angle(), ent:GetPos(), ent:GetAngles())
 				
@@ -164,7 +162,7 @@ local function callbackBullet(self, tr, dmg, force, bullet, penetration)
 				if IsValid(ent) and hgIsDoor(ent) then
 					-- open areaportal
 				end
-
+				
 				if !dontadd then
 					local dist = hitPos:Distance(hit.HitPos)
 					table.insert(hg.bulletholes, {hitPos2, dir2, dist, hitNormal2, bullet.Diameter / 25.4 * 3, ent})
