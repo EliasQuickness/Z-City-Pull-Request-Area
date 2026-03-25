@@ -1,6 +1,8 @@
 local blackList = {
     ["weapon_hands_sh"] = true,
-    ["weapon_zombclaws"] = true
+    ["weapon_zombclaws"] = true,
+    ["weapon_physgun"] = true,
+    ["gmod_tool"] = true,
 }
 
 local META = getmetatable("PLAYER")
