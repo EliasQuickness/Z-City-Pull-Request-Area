@@ -519,14 +519,14 @@ local zombieNPCClasses = {
     ["npc_zombie"] = true,
 }
 
-local zb_coop_maxpossesses = ConVarExists("zb_coop_maxpossesses") and GetConVar("zb_coop_maxpossesses") or CreateConVar("zb_coop_maxpossesses",3,FCVAR_SERVER_CAN_EXECUTE,"Max NPC possession amount in Half-Life 2 CO-OP round",1,100)
+local zb_coop_maxpossesses = ConVarExists("zb_coop_maxpossesses") and GetConVar("zb_coop_maxpossesses") or CreateConVar("zb_coop_maxpossesses",10,FCVAR_SERVER_CAN_EXECUTE,"Max NPC possession amount in Half-Life 2 CO-OP round",1,100)
 
 local function CanPossessNPC(ply, npc)
     if not IsValid(ply) or not IsValid(npc) then return false end
     if ply:Alive() then return false end
     if CurrentRound().name ~= "coop" then return false end
     if not coop_rts:GetBool() then return false end
-    if (ply.RTSUses or 0) >= zb_coop_maxpossesses:GetInt() and not ply:IsAdmin() then return false end
+    if (ply.RTSUses or 0) >= zb_coop_maxpossesses:GetInt() and not ply:IsAdmin() then ply:ChatPrint("All of the possessions have been used up.") return false end
 
     local npcClass = npc:GetClass()
     if friendlyNPCClasses[npcClass] then return true end
