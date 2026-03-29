@@ -19,7 +19,9 @@ A.Bcc -> 1.000
 nothing yet (we're as vanilla as you can get basically)
 
 ## other credits
+
 eliasquickness - did every modification
+
 ethanregardless - worked on hideandseek or smth
 
 schizo shack - for motivating me to work on this repo and being the reason for some of the modifications
