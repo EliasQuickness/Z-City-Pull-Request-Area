@@ -681,7 +681,7 @@ function MODE:Intermission()
 	MODE.TraitorWord = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
 	MODE.TraitorWordSecond = MODE.TraitorWords[math.random(1, #MODE.TraitorWords)]
 
-	local homicide_traitoramount = ConVarExists("homicide_traitoramount") and GetConVar("homicide_traitoramount") or CreateConVar("homicide_traitoramount",1,FCVAR_SERVER_CAN_EXECUTE,"Homicide Only: Setting the value above 1 results in extra traitors becoming assistants to a Main Traitor.",1,20)
+	local homicide_traitoramount = ConVarExists("homicide_traitoramount") and GetConVar("homicide_traitoramount") or CreateConVar("homicide_traitoramount",1,FCVAR_SERVER_CAN_EXECUTE,"Homicide Only: Determine how many traitors should innocents face in homicide.",1,20)
 	local traitors_needed = homicide_traitoramount:GetInt()
 	
 	if not (MODE.ShouldStartRoleRound()) then
