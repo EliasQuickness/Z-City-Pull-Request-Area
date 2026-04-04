@@ -120,7 +120,7 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 	surface.DrawText(txt)
 
 
-	if spect.organism.brain == nil and viewmode ~= 2 then return end
+	if spect.organism == nil and viewmode ~= 2 then return end
 	if spect.PlayerClassName == nil and viewmode ~= 2 then return end
 
 	if spect.organism.otrub and not viewmode == 2 then
