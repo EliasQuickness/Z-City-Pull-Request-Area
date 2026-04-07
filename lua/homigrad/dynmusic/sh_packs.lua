@@ -142,7 +142,7 @@ DMusic:AddPack( "hnschase" )
 
 -- Music
 local Music = musMeta:CreateTbl()
-musMeta:AddMusic(Music, 1, "chase/ACTION&CONSEQUENCE.ogg", 1.2)
+--musMeta:AddMusic(Music, 1, "chase/ACTION&CONSEQUENCE.ogg", 1.2) dudes a BUMMMM
 musMeta:AddMusic(Music, 1, "chase/LAUNCHED.ogg", 1.2)
 
 -- Add2Pack

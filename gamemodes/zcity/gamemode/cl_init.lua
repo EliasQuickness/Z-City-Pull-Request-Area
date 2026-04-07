@@ -120,8 +120,7 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 	surface.DrawText(txt)
 
 
-	if spect.organism == nil and viewmode ~= 2 then return end
-	if spect.PlayerClassName == nil and viewmode ~= 2 then return end
+	if spect.organism == nil then return end
 
 	if spect.organism.otrub and not viewmode == 2 then
 		local txt = spect:GetPlayerName().." is unconscious."
@@ -130,7 +129,7 @@ hook.Add("HUDPaint","FUCKINGSAMENAMEUSEDINHOOKFUCKME",function()
 		surface.DrawText(txt)
 	end
 
-	if viewmode == 2 then return end
+	if spect.PlayerClassName == nil and viewmode ~= 2 or spect.organism.o2 == nil or spect.organism.brain == nil then return end -- this is ass
 
 	if spect.organism.o2[1] < 15 or spect.organism.brain > 0.05 or spect.PlayerClassName and spect.PlayerClassName == "Gordon" then
 		local txt = spect:GetPlayerName().." is unable to speak to other alive players."
