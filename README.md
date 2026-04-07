@@ -16,7 +16,7 @@ A.Bcc -> 1.000
 - c -> Fixes and other small things
 
 ## credits for external addon things that this server uses
-nothing yet (we're as vanilla as you can get basically)
+[Pat's Scoreboard](https://steamcommunity.com/sharedfiles/filedetails/?id=3684456533) (I like his scoreboard)
 
 ## other credits
 
