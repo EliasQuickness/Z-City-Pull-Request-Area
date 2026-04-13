@@ -46,6 +46,7 @@ net.Receive("HMCD_RoundStart",function()
 			end
 
 			chat.AddText("Traitor secret words are: \"" .. MODE.TraitorWord .. "\" and \"" .. MODE.TraitorWordSecond .. "\".")
+			chat.AddText("Use F4 to see the traitor words and your fellow traitor(s) again.")
 		end
 
 		if(lply.MainTraitor)then
