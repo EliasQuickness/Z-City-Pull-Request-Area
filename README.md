@@ -15,12 +15,13 @@ A.Bcc -> 1.000
 - B -> New mechanics, gameplay changes
 - c -> Fixes and other small things
 
-## Support us
-**Donation links:**
-- [Yoomoney](https://yoomoney.ru/fundraise/17GFEQH326Q.250101) 
-- [Boosty](https://boosty.to/sadsalat/donate)
+## credits for external addon things that this server uses
+[Pat's Scoreboard](https://steamcommunity.com/sharedfiles/filedetails/?id=3684456533) (I like his scoreboard)
 
-**Crypto**
-- USDT(TRC20): TYgpaZgHQr6qEgemhHzVvV7AQESiyhHpZD
-- BTC(BTC): bc1qa8pk9ag6xa5yav2mvlxkra8xk25lg3htgfqh5w
-- ETH(ERC20)* 0x72AdCCcCEB4E323C64bCF0955A779DD9298E9483
+## other credits
+
+eliasquickness - did every modification
+
+ethanregardless - worked on hideandseek or smth
+
+schizo shack - for motivating me to work on this repo and being the reason for some of the modifications
