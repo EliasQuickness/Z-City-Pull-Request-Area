@@ -212,6 +212,7 @@ function MODE:ShouldRoundEnd()
     for _,ply in player.Iterator() do
         if not ply:Alive() then continue end
         if ply.PlayerClassName == "Combine" or ply.PlayerClassName == "Metrocop" or ply.PlayerClassName == "headcrabzombie" then continue end
+        if ply:IsBot() then continue end
         lives = lives + 1
     end
 
