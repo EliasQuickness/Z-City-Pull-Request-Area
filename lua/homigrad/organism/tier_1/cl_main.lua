@@ -456,7 +456,7 @@ hook.Add("Post Post Pre Post Processing", "organism-effects", function()
 
 	disorientationLerp = LerpFT(disorientation > disorientationLerp and 1 or 0.01, disorientationLerp, math.max(lply.suiciding and 1.5 or 0, disorientation))
 
-	if (disorientationLerp > 1) and lply:Alive() or brain > 0 then
+	if (disorientationLerp > 1) and lply:Alive() or brain > 0 and lply.organism ~= nil and !lply.organism.otrub then // brain damage breaks the text from appearing
 		local add2 = disorientationLerp - 1
 		if not brain_motionblur and lply.PlayerClassName ~= "headcrabzombie" then DrawMotionBlur(0.15 - math.Clamp(add2 / 1, 0, 0.1), add2 * 2, 0.001) end
 		if disorientationLerp > 2 then
