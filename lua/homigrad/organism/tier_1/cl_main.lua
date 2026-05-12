@@ -545,7 +545,7 @@ hook.Add("Post Post Pre Post Processing", "organism-effects", function()
 	local ent = IsValid(lply.FakeRagdoll) and lply.FakeRagdoll or lply
 
 	if otrub then
-		render.PushFilterMag( TEXFILTER.ANISOTROPIC )
+		--[[render.PushFilterMag( TEXFILTER.ANISOTROPIC )
 		render.PushFilterMin( TEXFILTER.ANISOTROPIC )
 
 		local textOtrub = "You are unconscious."
@@ -589,7 +589,7 @@ hook.Add("Post Post Pre Post Processing", "organism-effects", function()
 		parsed:Draw( ScrW()/2, ScrH()/2.2, TEXT_ALIGN_CENTER, nil, nil, TEXT_ALIGN_CENTER )
 
 		render.PopFilterMag()
-		render.PopFilterMin()
+		render.PopFilterMin()--]]
 	end
 
 	if IsValid(ent) and ent.Blinking and lply:Alive() then
