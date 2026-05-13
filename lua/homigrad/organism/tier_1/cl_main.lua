@@ -489,7 +489,7 @@ hook.Add("Post Post Pre Post Processing", "organism-effects", function()
 			//surface.SetMaterial(pain_mat)
 			//surface.DrawTexturedRect(-1, -1, ScrW()+1, ScrH()+1)
 			local blur = math.max((newpain / 30 + brain * 10),0) / 30
-			if blur > 0 then
+			if blur > 0 and not org.otrub then
 				DrawMaterialOverlay( "sprites/mat_jack_hmcd_scope_aberration", blur )
 			end
 		end
