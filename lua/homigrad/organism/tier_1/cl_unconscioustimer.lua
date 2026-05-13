@@ -20,7 +20,7 @@ if not org then return end
 	local immobilization = org.immobilization or 0
 	local incapacitated = org.incapacitated or false
 	local critical = org.critical or false
-	local shock = org.shock or false
+	local shock = org.shock or 0
 
 local unconsciousblud = org.otrub
 
