@@ -15,8 +15,11 @@ A.Bcc -> 1.000
 - B -> New mechanics, gameplay changes
 - c -> Fixes and other small things
 
-## credits for external addon things that this server uses
+## credits for external addon things that this server uses 
+### (only ones that serve as an external addon specifically to z-city)
 [Pat's Scoreboard](https://steamcommunity.com/sharedfiles/filedetails/?id=3684456533) (I like his scoreboard)
+
+[Moodles](https://steamcommunity.com/sharedfiles/filedetails/?id=3683079310) (cool addon)
 
 ## other credits
 
