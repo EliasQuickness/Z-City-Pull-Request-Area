@@ -491,8 +491,6 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 
 	local dmgtype = dmgInfo:GetDamageType()
 	
-	local org = ent.organism
-	if not org then return end
 	if org.godmode then return true end
 
 	local ply = (ent:IsPlayer() and ent) or hg.RagdollOwner(ent)
@@ -1118,7 +1116,7 @@ hook.Add("EntityTakeDamage", "homigrad-damage", function(ent, dmgInfo)
 			dmgInfo:GetAttacker():Remove()
 		end
 	end
-	
+
 	return !ent:IsNPC()
 end)
 
