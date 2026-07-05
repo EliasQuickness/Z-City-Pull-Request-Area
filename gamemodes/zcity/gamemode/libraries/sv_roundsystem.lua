@@ -133,8 +133,8 @@ function zb:EndRoundThink()
 			zb.END_TIME = (CurTime() + (CurrentRound().end_time or 5))
 			if zb.nextround == "coop" and GetGlobalVar("coop_first_round_timer", 0) == 0 then
 
-				zb.END_TIME = (CurTime() + (GetConVar("zb_dev") and 60 or 60))
-				RunConsoleCommand("hostname", "Elias's Semi Functional Z-COOP SERVER | INTERMISSION")
+				zb.END_TIME = (CurTime() + (GetConVar("zb_dev"):GetBool() and 5 or 60))
+        RunConsoleCommand("hostname", "Elias's Semi Functional Z-COOP SERVER | INTERMISSION")
 				SetGlobalVar("coop_first_round_timer", zb.END_TIME)
 			end
 		end
